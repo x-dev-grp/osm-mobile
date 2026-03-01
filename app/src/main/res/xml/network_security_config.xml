@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!--
+        RÔLE MÉTIER : Configuration de sécurité réseau
+        - Permet les connexions HTTP en développement
+        - À SUPPRIMER en production (utiliser HTTPS)
+
+        Pourquoi c'est nécessaire :
+        - Le backend tourne en HTTP sur localhost en développement
+        - Android bloque les connexions HTTP par défaut depuis Android 9
+        - Cette config permet le développement sur émulateur
+    -->
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- 10.0.2.2 = localhost de l'ordinateur pour l'émulateur Android -->
+        <domain includeSubdomains="true">10.0.2.2</domain>
+        <domain includeSubdomains="true">localhost</domain>
+        <!-- Ajoutez votre IP locale pour les tests sur vrai appareil -->
+        <!-- <domain includeSubdomains="true">192.168.1.x</domain> -->
+    </domain-config>
+</network-security-config>

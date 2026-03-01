@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Couleurs de la société d'huile d'olive -->
+    <color name="olive_green">#8A9A5B</color>        <!-- Vert olive doux -->
+    <color name="olive_dark">#5C6B3F</color>         <!-- Vert olive profond -->
+    <color name="olive_gold">#D4AF37</color>         <!-- Doré (couleur de l'huile) -->
+    <color name="olive_cream">#F5F0E6</color>        <!-- Ivoire crème -->
+    <color name="olive_brown">#6B4F3C</color>        <!-- Marron (tronc) -->
+    <color name="olive_light">#E8EDE0</color>        <!-- Vert très clair -->
+
+    <!-- Textes -->
+    <color name="text_primary">#2C3E2F</color>       <!-- Vert très foncé -->
+    <color name="text_secondary">#6B7F6B</color>     <!-- Gris-vert -->
+    <color name="text_white">#FFFFFF</color>         <!-- Blanc -->
+
+    <!-- États -->
+    <color name="error">#C45A5A</color>              <!-- Rouge doux -->
+</resources>
