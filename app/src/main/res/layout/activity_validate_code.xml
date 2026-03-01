@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/olive_cream"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- Icône de vérification (feuille d'olivier) -->
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/enter_code_title"
+        android:src="@drawable/ic_verification"
+        app:tint="@color/olive_green" />
+
+    <!-- Titre -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/enter_code_title"
+        android:textColor="@color/olive_dark"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- Message -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="@string/code_sent_message"
+        android:textAlignment="center"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp" />
+
+    <!-- Champ Code avec icône -->
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:boxStrokeColor="@color/olive_green"
+        app:boxStrokeWidth="1dp"
+        app:boxStrokeWidthFocused="2dp"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/olive_green"
+        app:startIconDrawable="@drawable/ic_code"
+        app:startIconTint="@color/olive_green">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/code_hint"
+            android:inputType="number"
+            android:letterSpacing="0.2"
+            android:maxLength="6"
+            android:maxLines="1"
+            android:paddingVertical="12dp"
+            android:textAlignment="center"
+            android:textColor="@color/olive_dark"
+            android:textSize="20sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Bouton Valider -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnValidate"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="@string/validate"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:backgroundTint="@color/olive_green"
+        app:cornerRadius="28dp" />
+
+    <!-- ProgressBar -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:indeterminateTint="@color/olive_green"
+        android:visibility="gone" />
+
+    <!-- Lien Renvoyer -->
+    <TextView
+        android:id="@+id/btnResendCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="?selectableItemBackground"
+        android:padding="8dp"
+        android:text="@string/resend_code"
+        android:textColor="@color/olive_green"
+        android:textSize="14sp" />
+
+</LinearLayout>

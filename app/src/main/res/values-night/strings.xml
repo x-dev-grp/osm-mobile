@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="extra_virgin_olive_oil">Extra Virgin Olive Oil</string>
+    <string name="sign_in_to_continue">Sign in to continue</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="olive_gold">ABIOOC</string>
+    <string name="log_out">Log out</string>
+</resources>

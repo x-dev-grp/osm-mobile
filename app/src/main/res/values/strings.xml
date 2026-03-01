@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">OSM Mobile</string>
+
+    <!-- === ÉCRAN DE CONNEXION === -->
+    <string name="welcome_back">Welcome Back</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+
+    <!-- === ÉCRAN DE RÉINITIALISATION === -->
+    <string name="reset_password_title">Reset Password</string>
+    <string name="reset_password_instruction">Enter your email or phone number to receive a verification code</string>
+    <string name="identifier_hint">Email or Phone Number</string>
+    <string name="send_code">Send Code</string>
+    <string name="back_to_login">Back to Login</string>
+
+    <!-- === ÉCRAN DE VALIDATION === -->
+    <string name="enter_code_title">Enter Code</string>
+    <string name="code_sent_message">We\'ve sent a 6-digit code to your email/phone</string>
+    <string name="code_hint">6-digit code</string>
+    <string name="validate">Validate</string>
+    <string name="resend_code">Resend Code</string>
+
+    <!-- === ÉCRAN DE NOUVEAU MOT DE PASSE === -->
+    <string name="new_password_title">New Password</string>
+    <string name="new_password_instruction">Create a new password (minimum 6 characters)</string>
+    <string name="new_password_hint">New Password</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="update_password">Update Password</string>
+
+    <!-- === MENU === -->
+    <string name="logout">Logout</string>
+
+    <!-- === MESSAGES === -->
+    <string name="login_success">Login successful!</string>
+    <string name="code_sent_success">Verification code sent</string>
+    <string name="code_validated">Code validated</string>
+    <string name="password_updated">Password updated successfully</string>
+    <string name="change_temp_password">Please change your temporary password</string>
+
+    <!-- === ERREURS === -->
+    <string name="error_invalid_credentials">Invalid username or password</string>
+    <string name="error_account_locked">Account is locked or disabled</string>
+    <string name="error_user_not_found">User not found</string>
+    <string name="error_invalid_code">Invalid or expired code</string>
+    <string name="error_passwords_not_match">Passwords do not match</string>
+    <string name="error_network">Network error. Please check your connection.</string>
+    <string name="error_user_id_missing">Error: User ID missing</string>
+    <string name="extra_virgin_olive_oil">Extra Virgin Olive Oil</string>
+    <string name="sign_in_to_continue">Sign in to continue</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="olive_gold">ABIOOC</string>
+    <string name="log_out">Log out</string>
+</resources>

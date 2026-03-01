@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+        THÈME PRINCIPAL - Olive Gold
+        Inspiré par les couleurs de la Méditerranée et de l'olivier
+    -->
+    <style name="Theme.osm_mobile" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Couleurs principales (utilisées par les composants Material) -->
+        <item name="colorPrimary">@color/olive_green</item>
+        <item name="colorPrimaryVariant">@color/olive_dark</item>
+        <item name="colorOnPrimary">@color/text_white</item>
+
+        <item name="colorSecondary">@color/olive_gold</item>
+        <item name="colorSecondaryVariant">@color/olive_brown</item>
+        <item name="colorOnSecondary">@color/text_primary</item>
+
+        <!-- Couleurs de fond -->
+        <item name="android:colorBackground">@color/olive_cream</item>
+        <item name="colorOnBackground">@color/text_primary</item>
+
+        <item name="android:colorPrimaryDark">@color/olive_dark</item>
+
+        <!-- Couleurs de surface (cartes, dialogues) -->
+        <item name="colorSurface">@color/material_on_surface_disabled</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+
+        <!-- Couleurs d'erreur -->
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/text_white</item>
+
+        <!-- Status bar et navigation -->
+        <item name="android:statusBarColor">@color/olive_dark</item>
+        <item name="android:navigationBarColor">@color/olive_cream</item>
+
+        <!-- Textes globaux -->
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
+
+        <!-- Style des boutons -->
+        <item name="materialButtonStyle">@style/Widget.AppCompat.Button</item>
+
+        <!-- Style des TextInputLayout -->
+        <item name="textInputStyle">@style/Widget.Design.TextInputLayout</item>
+
+        <!-- Style des cartes -->
+        <item name="materialCardViewStyle">@style/CardView</item>
+    </style>
+
+    <!--
+        THÈME AVEC ACTION BAR
+        Pour les écrans qui nécessitent une barre d'action traditionnelle
+    -->
+    <style name="Theme.AppCompat.DayNight.NoActionBar" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">@color/olive_green</item>
+        <item name="colorPrimaryDark">@color/olive_dark</item>
+        <item name="colorAccent">@color/olive_gold</item>
+        <item name="android:statusBarColor">@color/olive_dark</item>
+    </style>
+
+    <!--
+        THÈME SPLASH SCREEN
+        Pour l'écran de démarrage
+    -->
+    <style name="Theme.osm_mobile.Splash" parent="Theme.MaterialComponents.DayNight">
+        <item name="android:windowBackground">@color/olive_green</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!--
+        THÈME POUR LES BOÎTES DE DIALOGUE
+    -->
+    <style name="Theme.osm_mobile.Dialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorPrimary">@color/olive_green</item>
+        <item name="colorPrimaryDark">@color/olive_dark</item>
+        <item name="colorAccent">@color/olive_gold</item>
+    </style>
+
+</resources>
