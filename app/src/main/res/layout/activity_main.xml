@@ -1,46 +1,314 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/olive_cream"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="32dp">
+    tools:context=".MainActivity">
 
-    <!-- Image d'olivier décorative -->
-    <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="Olive branch" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/olive_green"
+            app:title="OSM Mobile"
+            app:titleTextColor="@android:color/white" />
 
-    <!-- tvWelcome — referenced in MainActivity binding -->
-    <TextView
-        android:id="@+id/tvWelcome"
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tvWelcome"
+                style="@style/TextAppearance.OSM.Header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="Bonjour, User!" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alignmentMode="alignMargins"
+                android:columnCount="2"
+                android:rowCount="3">
+
+                <!-- Production Orders Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardOF"
+                    style="@style/Widget.OSM.Card"
+                    android:layout_width="0dp"
+                    android:layout_height="140dp"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@android:drawable/ic_menu_agenda"
+                            app:tint="@color/olive_green" />
+
+                        <TextView
+                            style="@style/TextAppearance.OSM.CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Orders (OF)" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Storage Units Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardUnite"
+                    style="@style/Widget.OSM.Card"
+                    android:layout_width="0dp"
+                    android:layout_height="140dp"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@android:drawable/ic_popup_disk_full"
+                            app:tint="@color/olive_green" />
+
+                        <TextView
+                            style="@style/TextAppearance.OSM.CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Storage Units" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Colis Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardColis"
+                    style="@style/Widget.OSM.Card"
+                    android:layout_width="0dp"
+                    android:layout_height="140dp"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@android:drawable/ic_menu_view"
+                            app:tint="@color/olive_green" />
+
+                        <TextView
+                            style="@style/TextAppearance.OSM.CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Colis" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Palette Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardPalette"
+                    style="@style/Widget.OSM.Card"
+                    android:layout_width="0dp"
+                    android:layout_height="140dp"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@android:drawable/ic_menu_gallery"
+                            app:tint="@color/olive_green" />
+
+                        <TextView
+                            style="@style/TextAppearance.OSM.CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Palette" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Lot Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardLot"
+                    style="@style/Widget.OSM.Card"
+                    android:layout_width="0dp"
+                    android:layout_height="140dp"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@android:drawable/ic_menu_manage"
+                            app:tint="@color/olive_green" />
+
+                        <TextView
+                            style="@style/TextAppearance.OSM.CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Lots" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Filtration Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardFiltration"
+                    style="@style/Widget.OSM.Card"
+                    android:layout_width="0dp"
+                    android:layout_height="140dp"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@android:drawable/ic_menu_search"
+                            app:tint="@color/olive_gold" />
+
+                        <TextView
+                            style="@style/TextAppearance.OSM.CardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Filtration" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </GridLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- FAB pour le scan (caché initialement) -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabStartScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="8dp"
-        android:text="Welcome!"
-        android:textColor="@color/olive_dark"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="152dp"
+        android:alpha="0.0"
+        android:contentDescription="Lancer le scan"
+        android:scaleX="0.0"
+        android:scaleY="0.0"
+        android:visibility="gone"
+        app:backgroundTint="@color/olive_green"
+        app:elevation="6dp"
+        app:maxImageSize="24dp"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        app:tint="@android:color/white" />
 
-    <TextView
+    <!-- FAB pour l'historique (caché initialement) - CORRIGÉ -->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fabScanHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="Extra Virgin Olive Oil"
-        android:textColor="@color/olive_gold"
-        android:textSize="14sp" />
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="88dp"
+        android:alpha="0.0"
+        android:contentDescription="Historique des scans"
+        android:scaleX="0.0"
+        android:scaleY="0.0"
+        android:visibility="gone"
+        app:backgroundTint="@color/olive_cream"
+        app:elevation="6dp"
+        app:icon="@android:drawable/ic_menu_recent_history"
+        app:iconTint="@color/olive_green" />
 
-    <!-- Message de bienvenue personnalisé -->
-    <TextView
+    <!-- FAB principal pour ouvrir le menu de scan -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnLaunchScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quality since 2026"
-        android:textColor="@color/text_secondary"
-        android:textSize="12sp" />
+        android:layout_gravity="bottom|end"
+        android:layout_margin="24dp"
+        android:contentDescription="Actions de scan"
+        app:backgroundTint="@color/olive_green"
+        app:borderWidth="0dp"
+        app:elevation="8dp"
+        app:maxImageSize="28dp"
+        app:rippleColor="#33FFFFFF"
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:tint="@android:color/white" />
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

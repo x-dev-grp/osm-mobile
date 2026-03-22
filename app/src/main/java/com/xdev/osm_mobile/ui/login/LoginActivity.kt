@@ -51,11 +51,6 @@ class LoginActivity : AppCompatActivity() {
         setupUI()
         setupObservers()
     }
-
-    /**
-     * Configuration de l'interface utilisateur
-     * MÉTIER : Lie les actions de l'utilisateur (clics) aux fonctions métier
-     */
     private fun setupUI() {
         // Action de connexion - L'utilisateur clique sur le bouton "Login"
         binding.btnLogin.setOnClickListener {
@@ -77,16 +72,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Validation métier des champs de saisie
-     *
-     * RÈGLES MÉTIER :
-     * - Le nom d'utilisateur ne peut pas être vide
-     * - Le mot de passe ne peut pas être vide
-     *
-     * Cette validation locale évite des appels inutiles au serveur
-     * et améliore l'expérience utilisateur (feedback immédiat)
-     */
+
+    //Le nom d'utilisateur ne peut pas être vide
+    //Le mot de passe ne peut pas être vide
+
+    //Cette validation locale évite des appels inutiles au serveur
     private fun validateInput(username: String, password: String): Boolean {
         return when {
             username.isEmpty() -> {

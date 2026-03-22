@@ -8,14 +8,11 @@ package com.xdev.osm_mobile.utils
  * cruciales pour le fonctionnement métier de l'application.
  */
 object Constants {
-    // ===== CONFIGURATION SERVEUR =====
     /**
      * BASE_URL : Adresse du serveur backend
      *
      * IMPORTANT MÉTIER :
-     * - 10.0.2.2 = adresse spéciale pour l'émulateur Android (accès au localhost du PC)
-     * - En production, ce sera l'IP réelle du serveur (ex: https://api.osm.com)
-     * - Le port 8088 doit correspondre à celui configuré dans application.yml du backend
+     * - Utilise l'IP locale ou une IP configurée
      */
     const val BASE_URL = "http://10.0.2.2:8084/"
 
@@ -50,4 +47,7 @@ object Constants {
     const val KEY_IS_NEW_USER = "is_new_user"
     const val KEY_USER_ROLE = "user_role"
     const val KEY_USER_PERMISSIONS = "user_permissions"
+
+    // ===== SÉCURITÉ QR CODE =====
+    const val QR_SECRET = "osm-secret-key-2026-xdev-group-secure-qr"
 }
