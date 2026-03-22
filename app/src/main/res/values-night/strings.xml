@@ -6,4 +6,7 @@
     <string name="password">Password</string>
     <string name="olive_gold">ABIOOC</string>
     <string name="log_out">Log out</string>
+    <string name="olive_branch">Olive branch</string>
+    <string name="welcome">Welcome!</string>
+    <string name="fermer">Fermer</string>
 </resources>

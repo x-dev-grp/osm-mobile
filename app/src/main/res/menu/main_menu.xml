@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <item
+        android:id="@+id/action_sync"
+        android:icon="@android:drawable/stat_notify_sync"
+        android:title="File de sync"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_logout"
-        android:icon="@drawable/ic_logout"
-        android:title="@string/log_out"
-        app:showAsAction="always" />
+        android:icon="@android:drawable/ic_lock_power_off"
+        android:title="Log out"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_clear_history"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="Effacer l'historique" />
 
 </menu>

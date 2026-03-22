@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    tools:context=".ui.scan.QRScannerActivity">
+
+    <!-- Surface de la caméra (EN ARRIÈRE-PLAN) -->
+    <com.journeyapps.barcodescanner.DecoratedBarcodeView
+        android:id="@+id/barcodeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:zxing_framing_rect_height="280dp"
+        app:zxing_framing_rect_width="280dp"
+        app:zxing_preview_scaling_strategy="centerCrop"
+        app:zxing_use_texture_view="true" />
+
+    <!-- Overlay sombre avec "trou" pour la zone de scan -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#CC000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Zone transparente (trou) pour voir la caméra -->
+        <View
+            android:id="@+id/scanWindow"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Coins décoratifs -->
+        <View
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="-2dp"
+            android:layout_marginTop="-2dp"
+            android:background="@drawable/corner_top_left"
+            android:backgroundTint="@color/olive_gold"
+            app:layout_constraintStart_toStartOf="@id/scanWindow"
+            app:layout_constraintTop_toTopOf="@id/scanWindow" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="-2dp"
+            android:layout_marginEnd="-2dp"
+            android:background="@drawable/corner_top_right"
+            android:backgroundTint="@color/olive_gold"
+            app:layout_constraintEnd_toEndOf="@id/scanWindow"
+            app:layout_constraintTop_toTopOf="@id/scanWindow" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="-2dp"
+            android:layout_marginBottom="-2dp"
+            android:background="@drawable/corner_bottom_left"
+            android:backgroundTint="@color/olive_gold"
+            app:layout_constraintBottom_toBottomOf="@id/scanWindow"
+            app:layout_constraintStart_toStartOf="@id/scanWindow" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="-2dp"
+            android:layout_marginBottom="-2dp"
+            android:background="@drawable/corner_bottom_right"
+            android:backgroundTint="@color/olive_gold"
+            app:layout_constraintBottom_toBottomOf="@id/scanWindow"
+            app:layout_constraintEnd_toEndOf="@id/scanWindow" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Ligne de scan animée (au-dessus de l'overlay mais dans la zone claire) -->
+    <View
+        android:id="@+id/scanLine"
+        android:layout_width="260dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="-140dp"
+        android:background="@drawable/gradient_scan_line"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Toolbar (au-dessus de tout) -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back_white"
+        app:title="Scanner QR Code"
+        app:titleTextColor="@android:color/white" />
+
+    <!-- Texte d'instruction -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:background="#80000000"
+        android:padding="12dp"
+        android:text="Placez le code-barres dans le cadre"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonPanel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Panneau de boutons -->
+    <LinearLayout
+        android:id="@+id/buttonPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#80000000"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFlash"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Flash"
+            android:textColor="@android:color/white"
+            app:icon="@android:drawable/ic_menu_camera"
+            app:iconTint="@android:color/white" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="24dp"
+            android:layout_marginHorizontal="8dp"
+            android:background="@android:color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGallery"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Galerie"
+            android:textColor="@android:color/white"
+            app:icon="@android:drawable/ic_menu_gallery"
+            app:iconTint="@android:color/white" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,9 @@ data class User(
     @SerializedName("role")
     val role: String = "User",  // Default role
 
+    @SerializedName("tenantId")
+    val tenantId: String? = null,
+
     @SerializedName("permissions")
     val permissions: List<String> = emptyList()  // User permissions
 )

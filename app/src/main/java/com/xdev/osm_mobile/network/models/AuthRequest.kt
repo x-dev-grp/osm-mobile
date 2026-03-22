@@ -1,6 +1,7 @@
 package com.xdev.osm_mobile.network.models  // ✅ CORRECT: osm_mobile
 
 import com.google.gson.annotations.SerializedName
+import com.xdev.osm_mobile.utils.Constants
 
 data class AuthRequest(
     @SerializedName("grant_type")
@@ -10,7 +11,7 @@ data class AuthRequest(
     val clientId: String = "osm-client",
 
     @SerializedName("client_secret")
-    val clientSecret: String = "X7kP9mN2vQ8rT4wY6zA1bC3dE5fG8hJ9",
+    val clientSecret: String = Constants.CLIENT_SECRET,
 
     @SerializedName("username")
     val username: String,

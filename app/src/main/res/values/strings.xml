@@ -32,6 +32,12 @@
     <!-- === MENU === -->
     <string name="logout">Logout</string>
 
+
+    <!-- Décryptage -->
+    <string name="decryption_success">Décryptage réussi</string>
+    <string name="decryption_failed">Échec du décryptage</string>
+    <string name="decryption_password_hint">Mot de passe de décryptage</string>
+    <string name="invalid_json">JSON invalide</string>
     <!-- === MESSAGES === -->
     <string name="login_success">Login successful!</string>
     <string name="code_sent_success">Verification code sent</string>
@@ -53,4 +59,24 @@
     <string name="password">Password</string>
     <string name="olive_gold">ABIOOC</string>
     <string name="log_out">Log out</string>
+
+
+    <string name="scan_button_text">Launch QR Scan</string>
+    <string name="scan_qr_hint">Point the camera at a QR code</string>
+    <string name="result_label">Scan Result</string>
+    <string name="default_scan_type">Type: no scan yet</string>
+    <string name="default_scan_result">No scanned value yet</string>
+    <string name="empty_qr_value">Scanned, but the value is empty</string>
+    <string name="scan_success">QR code detected</string>
+    <string name="scan_cancelled">Scan cancelled by user</string>
+    <string name="camera_permission_denied">Camera permission was denied</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="scan_error">Scanner error: %1$s</string>
+    <string name="scan_status_cancelled">Status: user cancelled the scan</string>
+    <string name="scan_status_permission_missing">Status: camera permission missing</string>
+    <string name="scan_status_error">Status: scanner error</string>
+    <string name="olive_branch">Olive branch</string>
+    <string name="welcome">Welcome!</string>
+    <string name="quality_since_2026">Quality since 2022</string>
+    <string name="fermer">Fermer</string>
 </resources>

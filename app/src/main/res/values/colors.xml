@@ -7,7 +7,15 @@
     <color name="olive_cream">#F5F0E6</color>        <!-- Ivoire crème -->
     <color name="olive_brown">#6B4F3C</color>        <!-- Marron (tronc) -->
     <color name="olive_light">#E8EDE0</color>        <!-- Vert très clair -->
+    <color name="colorPrimary">@color/olive_green</color>
+    <color name="colorPrimaryDark">@color/olive_dark</color>
+    <color name="colorAccent">@color/olive_gold</color>
 
+    <color name="green">#4CAF50</color>
+    <color name="red">#F44336</color>
+    <color name="orange">#FF9800</color>
+    <color name="gray">#9E9E9E</color>
+    <color name="light_gray">#F5F5F5</color>
     <!-- Textes -->
     <color name="text_primary">#2C3E2F</color>       <!-- Vert très foncé -->
     <color name="text_secondary">#6B7F6B</color>     <!-- Gris-vert -->

@@ -2,22 +2,37 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xdev.osm_mobile">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
 
     <application
-        android:name="com.xdev.osm_mobile.OSMApplication"
+        android:name=".OSMApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.DayNight"
+        android:theme="@style/Theme.osm_mobile"
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name="com.xdev.osm_mobile.ui.login.LoginActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat">
+            android:name=".ui.entity.EntityListActivity"
+            android:exported="false" />
+
+
+        <activity
+            android:name=".ui.scan.QRScannerActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.OSMMobile" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,21 +40,22 @@
         </activity>
 
         <activity
-            android:name="com.xdev.osm_mobile.MainActivity"
-            android:exported="false" />
+            android:name=".ui.login.LoginActivity"
+            android:exported="true" />
 
         <activity
-            android:name="com.xdev.osm_mobile.ui.resetpassword.ResetPasswordActivity"
+            android:name=".ui.resetpassword.ResetPasswordActivity"
             android:exported="false" />
-
         <activity
-            android:name="com.xdev.osm_mobile.ui.resetpassword.ValidateCodeActivity"
+            android:name=".ui.resetpassword.ValidateCodeActivity"
             android:exported="false" />
-
         <activity
-            android:name="com.xdev.osm_mobile.ui.resetpassword.NewPasswordActivity"
+            android:name=".ui.resetpassword.NewPasswordActivity"
             android:exported="false" />
 
+        <activity android:name=".ui.sync.SyncQueueActivity" />
+
+        <activity android:name=".ui.of.OfDetailActivity" />
     </application>
 
 </manifest>
