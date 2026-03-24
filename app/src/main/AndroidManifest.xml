@@ -53,6 +53,7 @@
             android:name=".ui.resetpassword.NewPasswordActivity"
             android:exported="false" />
 
+
         <activity android:name=".ui.sync.SyncQueueActivity" />
 
         <activity android:name=".ui.of.OfDetailActivity" />

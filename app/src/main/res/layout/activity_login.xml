@@ -88,10 +88,12 @@
                     android:id="@+id/etUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimaryDark"
                     android:hint="@string/username"
                     android:inputType="text"
                     android:paddingVertical="16dp"
                     android:textColor="@color/text_primary"
+                    android:textColorHint="@color/cardview_dark_background"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,27 +116,15 @@
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimaryDark"
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:paddingVertical="16dp"
                     android:textColor="@color/text_primary"
+                    android:textColorHint="@color/cardview_dark_background"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Lien mot de passe oublié -->
-            <TextView
-                android:id="@+id/tvForgotPassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginBottom="24dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:fontFamily="sans-serif-medium"
-                android:letterSpacing="0.02"
-                android:padding="8dp"
-                android:text="@string/forgot_password"
-                android:textColor="@color/olive_green"
-                android:textSize="14sp" />
 
             <!-- Bouton Login -->
             <com.google.android.material.button.MaterialButton

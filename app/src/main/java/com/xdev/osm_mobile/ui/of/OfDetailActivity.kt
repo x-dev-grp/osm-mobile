@@ -17,18 +17,16 @@ import kotlinx.coroutines.withContext
 class OfDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOfDetailBinding
-    private lateinit var of: OrderFabricationDTO   //  single object
+    private lateinit var of: OrderFabricationDTO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOfDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Toast.makeText(this, "onCreate appelé", Toast.LENGTH_SHORT).show()
-
 
         val ofNumber = intent.getStringExtra(EXTRA_OF_NUMBER)
         if (ofNumber.isNullOrEmpty()) {
-            Toast.makeText(this, "Numéro OF manquant", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Numero OF manquant", Toast.LENGTH_SHORT).show()
             finish()
             return
         }
@@ -40,61 +38,46 @@ class OfDetailActivity : AppCompatActivity() {
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.toolbar.setNavigationOnClickListener { onBackPressed() }
-        supportActionBar?.title = "Détail OF"
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+        supportActionBar?.title = "Detail OF"
     }
 
     private fun loadOfDetails(ofNumber: String) {
-        lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch {
             try {
-                val response = RetrofitClient.instance.getOfs()
-                if (response.isSuccessful) {
-                    val ofList = response.body()?.data ?: emptyList()
-                    // find returns a single element (nullable)
-                    val found = ofList.find { it.code == ofNumber }
-                    if (found != null) {
-                        of = found   // ✅ assign the single object
-                        withContext(Dispatchers.Main) {
-                            displayOfDetails()
-                            setupActionButtons()
-                        }
-                    } else {
-                        throw Exception("OF non trouvé")
-                        //win l intent
+                val found = withContext(Dispatchers.IO) {
+                    val response = RetrofitClient.instance.getOfs()
+                    if (!response.isSuccessful) {
+                        throw IllegalStateException("Erreur chargement OF")
                     }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(
-                            this@OfDetailActivity,
-                            "Erreur chargement OF",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        finish()
-                    }
+
+                    response.body().orEmpty().find { it.code == ofNumber }
+                        ?: throw IllegalStateException("OF non trouve")
                 }
+
+                of = found
+                displayOfDetails()
+                setupActionButtons()
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@OfDetailActivity,
-                        "Erreur: ${e.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    finish()
-                }
+                Toast.makeText(this@OfDetailActivity, e.message ?: "Erreur", Toast.LENGTH_SHORT)
+                    .show()
+                finish()
             }
         }
     }
 
     private fun displayOfDetails() {
         with(binding) {
-            tvOfNumber.text = of.code ?: "—"
-            tvStatus.text = of.statut ?: "—"
+            tvOfNumber.text = of.code ?: "-"
+            tvStatus.text = of.statut ?: "-"
             tvStatus.setBackgroundColor(getStatusColor(of.statut))
 
-            tvSku.text = of.sku?.code ?: "—"
-            tvProductName.text = of.sku?.category ?: "—"
-
-            tvLotVrac.text = "Non défini"
+            tvSku.text = of.sku?.code ?: of.skuCode ?: "-"
+            tvProductName.text =
+                of.sku?.category ?: of.ligneConditionnement?.nom ?: of.ligneNom ?: "-"
+            tvLotVrac.text = of.lotVracId ?: "Non defini"
 
             tvTargetQuantity.text = formatQuantity(of.quantiteCible)
             tvProducedQuantity.text = formatQuantity(of.quantiteBonne)
@@ -118,21 +101,19 @@ class OfDetailActivity : AppCompatActivity() {
         return ContextCompat.getColor(this, colorRes)
     }
 
-    private fun formatQuantity(value: Double?): String {
-        return if (value != null) String.format("%.2f", value) + " u" else "—"
-    }
+    private fun formatQuantity(value: Double?): String =
+        if (value != null) String.format("%.2f u", value) else "-"
 
-    private fun formatDate(dateString: String?): String {
-        return dateString?.take(10) ?: "—"
-    }
+    private fun formatDate(dateString: String?): String =
+        dateString?.take(10) ?: "-"
 
     private fun setupActionButtons() {
         binding.btnStartProduction.setOnClickListener {
-            Toast.makeText(this, "Démarrer production (à implémenter)", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Demarrer production (a implementer)", Toast.LENGTH_SHORT).show()
         }
+
         binding.btnPerformQualityControl.setOnClickListener {
-            Toast.makeText(this, "Effectuer contrôle qualité (à implémenter)", Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(this, "Controle qualite (a implementer)", Toast.LENGTH_SHORT).show()
         }
 
         val isActive = of.statut?.uppercase() == "ACTIF"
@@ -143,10 +124,9 @@ class OfDetailActivity : AppCompatActivity() {
     companion object {
         private const val EXTRA_OF_NUMBER = "extra_of_number"
 
-        fun newIntent(context: Context, ofNumber: String): Intent {
-            return Intent(context, OfDetailActivity::class.java).apply {
+        fun newIntent(context: Context, ofNumber: String): Intent =
+            Intent(context, OfDetailActivity::class.java).apply {
                 putExtra(EXTRA_OF_NUMBER, ofNumber)
             }
-        }
     }
 }
