@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken
 
 
 class ScanHistoryManager(private val context: Context) {
-    //coff pour stocker les scan dans la memoire
+    //pour stocker les scan dans la memoire (local)
     private val prefs: SharedPreferences =
         context.getSharedPreferences("scan_history", Context.MODE_PRIVATE)
     private val gson = Gson()

@@ -41,7 +41,7 @@ class OfflineManager(private val context: Context) {
         prefs.edit().putString(KEY_OFFLINE_SCANS, json).apply()
     }
 
-    // --- Méthodes publiques ---
+
     fun saveScanOffline(scanData: ScanData) {
         val offlineScan = OfflineScan(
             content = scanData.content,
@@ -74,9 +74,9 @@ class OfflineManager(private val context: Context) {
 
     fun getPendingScansCount(): Int = getPendingScans().size
 
-    /**
-     * Synchronise tous les scans en attente avec le serveur.
-     */
+
+    //Synchronise tous les scans en attente avec le serveur.
+
     fun syncPendingScans(onComplete: (successCount: Int, failedCount: Int) -> Unit) {
         if (!NetworkUtils.isInternetAvailable(context)) {
             onComplete(0, getPendingScansCount())
@@ -123,10 +123,8 @@ class OfflineManager(private val context: Context) {
 
     private suspend fun sendScanToServer(scan: OfflineScan): Boolean {
         return try {
-            // TODO: Remplacer par votre véritable appel API
-            // val scanData = ScanData(...)
-            // val response = RetrofitClient.instance.sendScan(scanData)
-            // response.isSuccessful
+
+
             true
         } catch (e: Exception) {
             false

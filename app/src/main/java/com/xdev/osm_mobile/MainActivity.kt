@@ -88,9 +88,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Écouteur de connexion réseau : déclenche la synchronisation dès que la connexion revient.
-     */
+
+    //déclenche la synchronisation dès que la connexion revient.
+
     private fun setupConnectivityListener() {
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -300,25 +300,11 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
-            R.id.action_clear_history -> {
-                clearScanHistory()
-                true
-            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun clearScanHistory() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Effacer l'historique")
-            .setMessage("Voulez-vous vraiment effacer tout l'historique des scans ?")
-            .setPositiveButton("Effacer") { _, _ ->
-                scanHistoryManager.clearHistory()
-                Snackbar.make(binding.root, "Historique effacé", Snackbar.LENGTH_SHORT).show()
-            }
-            .setNegativeButton("Annuler", null)
-            .show()
-    }
 
     private fun logout() {
         MaterialAlertDialogBuilder(this)
