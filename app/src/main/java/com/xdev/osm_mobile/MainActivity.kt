@@ -12,13 +12,18 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.xdev.osm_mobile.databinding.ActivityMainBinding
+import com.xdev.osm_mobile.network.RetrofitClient
+import com.xdev.osm_mobile.network.models.QrResolveResponse
 import com.xdev.osm_mobile.network.models.ScanData
 import com.xdev.osm_mobile.ui.entity.EntityListActivity
 import com.xdev.osm_mobile.ui.entity.EntityListType
 import com.xdev.osm_mobile.ui.login.LoginActivity
+import com.xdev.osm_mobile.ui.of.OfDetailActivity
 import com.xdev.osm_mobile.ui.scan.QRScannerActivity
 import com.xdev.osm_mobile.ui.scan.ScanHistoryDialog
 import com.xdev.osm_mobile.ui.scan.ScanHistoryManager
@@ -26,6 +31,9 @@ import com.xdev.osm_mobile.ui.scan.ScanItem
 import com.xdev.osm_mobile.ui.sync.SyncQueueActivity
 import com.xdev.osm_mobile.utils.horsligne.NetworkUtils
 import com.xdev.osm_mobile.utils.horsligne.OfflineManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * MainActivity - Écran principal avec fonctionnalités de scan QR code
@@ -88,9 +96,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Écouteur de connexion réseau : déclenche la synchronisation dès que la connexion revient.
-     */
+    //déclenche la synchronisation dès que la connexion revient.
     private fun setupConnectivityListener() {
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -236,51 +242,34 @@ class MainActivity : AppCompatActivity() {
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             result.data?.let { data ->
-                val scannedContent = data.getStringExtra("scanned_content")
+                val scannedContent = data.getStringExtra("scanned_content") ?: return@let
                 val scanType = data.getStringExtra("scan_type") ?: "QR_CODE"
 
-                if (!scannedContent.isNullOrBlank()) {
-                    // Historique local
-                    val scanItem = ScanItem(
-                        content = scannedContent,
-                        type = scanType,
-                        timestamp = System.currentTimeMillis()
-                    )
-                    scanHistoryManager.addScanToHistory(scanItem)
-
-                    // Sauvegarde hors ligne avec ScanData
-                    val scanData = ScanData(
+                // Sauvegarde dans l'historique et hors ligne (comme avant)
+                val scanItem = ScanItem(
+                    content = scannedContent,
+                    type = scanType,
+                    timestamp = System.currentTimeMillis()
+                )
+                scanHistoryManager.addScanToHistory(scanItem)
+                offlineManager.saveScanOffline(
+                    ScanData(
                         content = scannedContent,
                         type = scanType,
                         format = "QR_CODE",
                         timestamp = System.currentTimeMillis()
                     )
-                    offlineManager.saveScanOffline(scanData)
+                )
 
-                    Snackbar.make(
-                        binding.root,
-                        "Scan réussi: $scannedContent",
-                        Snackbar.LENGTH_LONG
-                    )
-                        .setAction("Voir") {
-                            showScanHistory()
-                        }
-                        .show()
+                // Traitement du contenu scanné
+                val parsed = parseQrUrl(scannedContent)
+                if (parsed != null) {
+                    val (entityType, publicCode) = parsed
+                    resolveAndNavigate(entityType, publicCode)
+                } else {
+                    Snackbar.make(binding.root, "Scan: $scannedContent", Snackbar.LENGTH_SHORT).show()
                 }
             }
-        }
-    }
-
-    private fun handleScanItemClick(scanItem: ScanItem) {
-        Toast.makeText(this, "Scan: ${scanItem.content}", Toast.LENGTH_SHORT).show()
-
-        when {
-            scanItem.content.startsWith("OF:") -> openEntityList(EntityListType.OF)
-            scanItem.content.startsWith("LOT:") -> openEntityList(EntityListType.LOT)
-            scanItem.content.startsWith("COLIS:") -> openEntityList(EntityListType.COLIS)
-            scanItem.content.startsWith("PALETTE:") -> openEntityList(EntityListType.PALETTE)
-            else -> Snackbar.make(binding.root, "Type de scan non reconnu", Snackbar.LENGTH_SHORT)
-                .show()
         }
     }
 
@@ -299,25 +288,107 @@ class MainActivity : AppCompatActivity() {
                 logout()
                 true
             }
-
-            R.id.action_clear_history -> {
-                clearScanHistory()
-                true
-            }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun clearScanHistory() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Effacer l'historique")
-            .setMessage("Voulez-vous vraiment effacer tout l'historique des scans ?")
-            .setPositiveButton("Effacer") { _, _ ->
-                scanHistoryManager.clearHistory()
-                Snackbar.make(binding.root, "Historique effacé", Snackbar.LENGTH_SHORT).show()
+    // ================ GESTION DE LA RÉSOLUTION QR ================
+
+    private fun parseQrUrl(content: String): Pair<String, String>? {
+        return try {
+            val uri = android.net.Uri.parse(content)
+            val segments = uri.pathSegments
+            if (segments.size >= 4 && segments[0] == "q" && segments[1] == "v1") {
+                Pair(segments[2], segments[3])
+            } else null
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    private fun resolveAndNavigate(entityType: String, publicCode: String) {
+        lifecycleScope.launch {
+            var response = getCachedEntity(publicCode)
+
+            if (response == null && NetworkUtils.isInternetAvailable(this@MainActivity)) {
+                try {
+                    val apiResponse = withContext(Dispatchers.IO) {
+                        RetrofitClient.instance.resolveQr(entityType, publicCode)
+                    }
+                    if (apiResponse.isSuccessful) {
+                        response = apiResponse.body()
+                        response?.let { cacheEntity(it) }
+                    } else {
+                        val error = apiResponse.errorBody()?.string() ?: "Erreur serveur"
+                        showError("Erreur résolution : $error")
+                        return@launch
+                    }
+                } catch (e: Exception) {
+                    showError("Erreur réseau : ${e.message}")
+                    return@launch
+                }
             }
-            .setNegativeButton("Annuler", null)
-            .show()
+
+            if (response == null) {
+                showError("Aucune information disponible pour ce code (hors ligne).")
+                return@launch
+            }
+
+            navigateToEntityDetail(response)
+        }
+    }
+
+    private fun getCachedEntity(publicCode: String): QrResolveResponse? {
+        val prefs = getSharedPreferences("qr_cache", Context.MODE_PRIVATE)
+        val json = prefs.getString(publicCode, null) ?: return null
+        return try {
+            Gson().fromJson(json, QrResolveResponse::class.java)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    private fun cacheEntity(response: QrResolveResponse) {
+        val prefs = getSharedPreferences("qr_cache", Context.MODE_PRIVATE)
+        val json = Gson().toJson(response)
+        prefs.edit().putString(response.publicCode, json).apply()
+    }
+
+    private fun showError(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun navigateToEntityDetail(response: QrResolveResponse) {
+        when (response.entityType.uppercase()) {
+            "OF" -> {
+                val intent = OfDetailActivity.newIntent(this, response.entityId)
+                startActivity(intent)
+            }
+            "LOT" -> {
+                Toast.makeText(this, "Détail Lot à implémenter", Toast.LENGTH_SHORT).show()
+            }
+            "COLIS" -> {
+                Toast.makeText(this, "Détail Colis à implémenter", Toast.LENGTH_SHORT).show()
+            }
+            "PALETTE" -> {
+                Toast.makeText(this, "Détail Palette à implémenter", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                Toast.makeText(this, "Type inconnu : ${response.entityType}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun handleScanItemClick(scanItem: ScanItem) {
+        // Pour un historique, on peut aussi essayer de résoudre le code
+        Toast.makeText(this, "Scan: ${scanItem.content}", Toast.LENGTH_SHORT).show()
+        when {
+            scanItem.content.startsWith("OF:") -> openEntityList(EntityListType.OF)
+            scanItem.content.startsWith("LOT:") -> openEntityList(EntityListType.LOT)
+            scanItem.content.startsWith("COLIS:") -> openEntityList(EntityListType.COLIS)
+            scanItem.content.startsWith("PALETTE:") -> openEntityList(EntityListType.PALETTE)
+            else -> Snackbar.make(binding.root, "Type de scan non reconnu", Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     private fun logout() {

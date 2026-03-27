@@ -79,11 +79,6 @@ class SessionManager private constructor(context: Context) {
         return prefs.getString(Constants.KEY_REFRESH_TOKEN, null)
     }
 
-    //id de l'utilisateur
-    fun getUserId(): String? {
-        return prefs.getString(Constants.KEY_USER_ID, null)
-    }
-
     //nom d'utilisateur
     fun getUsername(): String? {
         return prefs.getString(Constants.KEY_USERNAME, null)
@@ -93,28 +88,6 @@ class SessionManager private constructor(context: Context) {
         return prefs.getBoolean(Constants.KEY_IS_LOGGED_IN, false)
     }
 
-    fun isNewUser(): Boolean {
-        return prefs.getBoolean(Constants.KEY_IS_NEW_USER, true)
-    }
-
-    fun hasPermission(permission: String): Boolean {
-        val role = getUserRole()
-        // Admin has all permissions (matching Angular behavior)
-        if (role == "Admin") return true
-
-        val permissions = getUserPermissions()
-        return permissions.contains(permission)
-    }
-
-    fun hasModule(module: String): Boolean {
-        val role = getUserRole()
-        if (role == "Admin") return true
-
-        val permissions = getUserPermissions()
-        return permissions.any {
-            it.substringBefore(":") == module
-        }
-    }
 
     fun clearSession() {
         prefs.edit().clear().apply()

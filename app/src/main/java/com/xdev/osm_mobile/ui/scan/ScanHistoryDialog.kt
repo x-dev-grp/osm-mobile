@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -17,7 +18,7 @@ class ScanHistoryDialog : BottomSheetDialogFragment() {
     private var onItemClick: ((ScanItem) -> Unit)? = null
 
     companion object {
-        fun show( // pour afficher le dialogue
+        fun show(
             fragmentManager: androidx.fragment.app.FragmentManager,
             history: List<ScanItem>,
             onItemClick: (ScanItem) -> Unit
@@ -39,29 +40,42 @@ class ScanHistoryDialog : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         val btnClose = view.findViewById<MaterialButton>(R.id.btnClose)
+        val btnClearHistory = view.findViewById<MaterialButton>(R.id.btnClearHistory)
+        val layoutEmpty = view.findViewById<View>(R.id.layoutEmpty)
         val tvEmpty = view.findViewById<TextView>(R.id.tvEmpty)
 
         if (historyList.isEmpty()) {
-            dismiss()
-            return //  //si historique vide , le dialogue se ferme immedia
+            // Afficher l'état vide
+            layoutEmpty.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+            btnClearHistory.visibility = View.GONE // Pas de bouton effacer si vide
+        } else {
+            // Afficher la liste et le bouton "Effacer"
+            layoutEmpty.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+            btnClearHistory.visibility = View.VISIBLE // Le bouton devient visible
 
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            recyclerView.adapter = ScanHistoryAdapter(historyList) { item ->
+                onItemClick?.invoke(item)
+                dismiss()
+            }
         }
-        // Configuration normale si la liste n'est pas vide
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        tvEmpty.visibility = View.GONE
-        recyclerView.visibility = View.VISIBLE
 
-        recyclerView.adapter = ScanHistoryAdapter(historyList) { item ->
-            onItemClick?.invoke(item)
-            dismiss()
-        }
-
+        // Bouton Fermer
         btnClose.setOnClickListener {
             dismiss()
         }
+
+        // Bouton Effacer tout l'historique
+        btnClearHistory.setOnClickListener {
+            val manager = ScanHistoryManager(requireContext())
+            manager.clearHistory() // Supprime tous les scans
+            Toast.makeText(requireContext(), "Historique effacé", Toast.LENGTH_SHORT).show()
+            dismiss() // Ferme le dialogue après effacement
+        }
     }
 }
-
-

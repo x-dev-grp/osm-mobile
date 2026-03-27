@@ -38,6 +38,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    dependenciesInfo {
+        includeInApk = false
+    }
 }
 
 dependencies {
@@ -60,8 +63,6 @@ dependencies {
 // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-    // Quickie
-    //implementation("io.github.g00fy2.quickie:quickie-bundled:1.11.0")
 
     //la dépendance CardView
     implementation("androidx.cardview:cardview:1.0.0")

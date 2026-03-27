@@ -7,7 +7,7 @@
     android:background="@android:color/black"
     tools:context=".ui.scan.QRScannerActivity">
 
-    <!-- Surface de la caméra (EN ARRIÈRE-PLAN) -->
+    <!-- Surface de la caméra (en arrière-plan) -->
     <com.journeyapps.barcodescanner.DecoratedBarcodeView
         android:id="@+id/barcodeView"
         android:layout_width="match_parent"
@@ -85,7 +85,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Ligne de scan animée (au-dessus de l'overlay mais dans la zone claire) -->
+    <!-- Ligne de scan animée -->
     <View
         android:id="@+id/scanLine"
         android:layout_width="260dp"
@@ -98,7 +98,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Toolbar (au-dessus de tout) -->
+    <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -123,7 +123,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Panneau de boutons -->
+    <!-- Panneau de boutons (Flash, Galerie, Saisie manuelle) -->
     <LinearLayout
         android:id="@+id/buttonPanel"
         android:layout_width="match_parent"
@@ -160,6 +160,23 @@
             android:text="Galerie"
             android:textColor="@android:color/white"
             app:icon="@android:drawable/ic_menu_gallery"
+            app:iconTint="@android:color/white" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="24dp"
+            android:layout_marginHorizontal="8dp"
+            android:background="@android:color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnManualEntry"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/manual_entry"
+            android:textColor="@android:color/white"
+            app:icon="@android:drawable/ic_menu_edit"
             app:iconTint="@android:color/white" />
 
     </LinearLayout>

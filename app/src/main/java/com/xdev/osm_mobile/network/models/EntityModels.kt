@@ -53,7 +53,15 @@ data class OrderFabricationDTO(
     @SerializedName("dateFinReelle") val dateFinReelle: String?,
     @SerializedName("quantiteCible") val quantiteCible: Double?,
     @SerializedName("quantiteBonne") val quantiteBonne: Double?,
+    @SerializedName("quantiteNC") val quantiteNC: Double?,
     @SerializedName("quantiteDefectueuse") val quantiteDefectueuse: Double?,
+    @SerializedName("dureeReelle") val dureeReelle: Long?,
+    @SerializedName("skuId") val skuId: String?,
+    @SerializedName("skuCode") val skuCode: String?,
+    @SerializedName("ligneId") val ligneId: String?,
+    @SerializedName("ligneNom") val ligneNom: String?,
+    @SerializedName("lotVracId") val lotVracId: String?,
+    @SerializedName("bomId") val bomId: String?,
     @SerializedName("sku") val sku: SKUDto?,
     @SerializedName("ligneConditionnement") val ligneConditionnement: LigneConditionnementDto?
 ) : Serializable

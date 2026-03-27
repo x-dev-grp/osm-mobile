@@ -12,9 +12,5 @@
         android:title="Log out"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/action_clear_history"
-        android:icon="@android:drawable/ic_menu_delete"
-        android:title="Effacer l'historique" />
 
 </menu>

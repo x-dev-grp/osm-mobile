@@ -1,5 +1,6 @@
 package com.xdev.osm_mobile.ui.scan
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -7,6 +8,8 @@ import android.os.Handler
 import android.os.Looper
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -23,6 +26,7 @@ import com.xdev.osm_mobile.utils.horsligne.OfflineManager
 
 /**
  * Activité de scan QR Code avec support des codes-barres
+ * et saisie manuelle en cas d'échec.
  */
 class QRScannerActivity : AppCompatActivity() {
 
@@ -33,7 +37,7 @@ class QRScannerActivity : AppCompatActivity() {
     private var lastScanTime = 0L
     private val scanCooldown = 2000L // 2 secondes entre chaque scan
 
-    // définit un callback pour la lecture de codes-barres ,detecter auto
+    // Callback pour la lecture automatique des codes-barres
     private val barcodeCallback = object : BarcodeCallback {
         override fun barcodeResult(result: BarcodeResult) {
             if (!isScanning) return
@@ -51,7 +55,6 @@ class QRScannerActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,22 +66,22 @@ class QRScannerActivity : AppCompatActivity() {
         setupButtons()
         startScanAnimation()
 
-        // Vérifier et demander la permission
+        // Vérifier et demander la permission caméra
         checkAndRequestCameraPermission()
     }
 
-    //barre d'action principale
+    // Barre d'action principale
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)//flèche vers la gauche
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Scanner QR Code"
 
         binding.toolbar.setNavigationOnClickListener {
-            onBackPressedDispatcher.onBackPressed() // Utilisation de OnBackPressedDispatcher
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 
-    //type de code
+    // Configuration du lecteur de codes-barres
     private fun setupBarcodeView() {
         try {
             // Formats supportés
@@ -97,14 +100,13 @@ class QRScannerActivity : AppCompatActivity() {
 
             binding.barcodeView.barcodeView.decoderFactory = DefaultDecoderFactory(formats)
 
-
-            // Configuration du flash (désactivé par défaut)
+            // Flash désactivé par défaut
             binding.barcodeView.setTorchOff()
 
-            // Démarrer le scan continu
+            // Démarrage du scan continu
             binding.barcodeView.decodeContinuous(barcodeCallback)
 
-            // Forcer le redémarrage de la caméra
+            // Redémarrage forcé de la caméra
             handler.postDelayed({
                 try {
                     binding.barcodeView.resume()
@@ -115,11 +117,13 @@ class QRScannerActivity : AppCompatActivity() {
             }, 500)
 
         } catch (e: Exception) {
-            Snackbar.make(binding.root, "Erreur caméra: ${e.message}", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(binding.root, "Erreur caméra: ${e.message}", Snackbar.LENGTH_LONG)
+                .setAction("Saisie manuelle") { showManualEntryDialog() }
+                .show()
         }
     }
 
-
+    // Configuration des boutons
     private fun setupButtons() {
         // Bouton flash
         binding.btnFlash.setOnClickListener {
@@ -130,11 +134,14 @@ class QRScannerActivity : AppCompatActivity() {
         binding.btnGallery.setOnClickListener {
             openGallery()
         }
+
+        // Nouveau bouton pour la saisie manuelle
+        binding.btnManualEntry.setOnClickListener {
+            showManualEntryDialog()
+        }
     }
 
-
-    //Animation de la ligne de scan
-
+    // Animation de la ligne de scan
     private fun startScanAnimation() {
         val animation = TranslateAnimation(
             TranslateAnimation.ABSOLUTE, 0f,
@@ -149,9 +156,7 @@ class QRScannerActivity : AppCompatActivity() {
         binding.scanLine.startAnimation(animation)
     }
 
-
-    //Active/désactive le flash
-
+    // Activation/désactivation du flash
     private fun toggleFlash() {
         try {
             isFlashOn = !isFlashOn
@@ -168,16 +173,12 @@ class QRScannerActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Ouvre la galerie pour sélectionner une image
-     */
+    // Ouvre la galerie (fonctionnalité à venir)
     private fun openGallery() {
         Toast.makeText(this, "Fonctionnalité à venir", Toast.LENGTH_SHORT).show()
-
     }
 
-
-    //Traite un scan réussi
+    // Traite un scan réussi
     private fun onScanSuccess(content: String, format: BarcodeFormat) {
         isScanning = false
 
@@ -200,17 +201,16 @@ class QRScannerActivity : AppCompatActivity() {
             )
         )
 
-        // Vérifier la connexion internet pour le mode hors ligne
+        // Gestion hors ligne
         if (!NetworkUtils.isInternetAvailable(this)) {
-            // Pas de connexion : sauvegarde en local
             OfflineManager.getInstance(this).saveScanOffline(scanData)
         }
 
-        // Retourner le résultat immédiatement
+        // Retourner le résultat
         returnScanResult(content, scanData.type, scanData.format)
     }
 
-    // returnScanResult
+    // Retourne le résultat à l'activité appelante
     private fun returnScanResult(content: String, scanType: String, format: String) {
         val resultIntent = Intent().apply {
             putExtra("scanned_content", content)
@@ -221,8 +221,65 @@ class QRScannerActivity : AppCompatActivity() {
         finish()
     }
 
+    // Affiche la boîte de dialogue pour la saisie manuelle
+    private fun showManualEntryDialog() {
+        val input = EditText(this)
+        input.hint = "Entrez le code manuellement"
+        input.inputType = android.text.InputType.TYPE_CLASS_TEXT
 
-    //Recommencer le scan
+        val layout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(50, 20, 50, 20)
+            addView(input)
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Saisie manuelle")
+            .setMessage("Si le scan échoue, entrez le code ci-dessous :")
+            .setView(layout)
+            .setPositiveButton("Valider") { _, _ ->
+                val code = input.text.toString().trim()
+                if (code.isNotEmpty()) {
+                    processManualCode(code)
+                } else {
+                    Toast.makeText(this, "Code vide", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Annuler", null)
+            .show()
+    }
+
+    // Traite le code saisi manuellement comme un scan
+    private fun processManualCode(code: String) {
+        // Créer un ScanData avec le type "MANUAL"
+        val scanData = ScanData(
+            content = code,
+            type = "MANUAL",
+            format = "MANUAL",
+            timestamp = System.currentTimeMillis()
+        )
+
+        // Sauvegarder dans l'historique local
+        val historyManager = ScanHistoryManager(this)
+        historyManager.addScanToHistory(
+            ScanItem(
+                content = code,
+                type = scanData.type,
+                format = scanData.format,
+                timestamp = scanData.timestamp
+            )
+        )
+
+        // Gestion hors ligne
+        if (!NetworkUtils.isInternetAvailable(this)) {
+            OfflineManager.getInstance(this).saveScanOffline(scanData)
+        }
+
+        // Retourner le résultat
+        returnScanResult(code, scanData.type, scanData.format)
+    }
+
+    // Reprend le scan après un résultat
     private fun resumeScanning() {
         isScanning = true
         binding.barcodeView.setStatusText("")
@@ -258,20 +315,18 @@ class QRScannerActivity : AppCompatActivity() {
         handler.removeCallbacksAndMessages(null)
     }
 
-    // Utilisation de OnBackPressedDispatcher au lieu de onBackPressed
     override fun onSupportNavigateUp(): Boolean {
         onBackPressedDispatcher.onBackPressed()
         return true
     }
 
+    // Gestion de la permission caméra
     private fun checkAndRequestCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
             == PackageManager.PERMISSION_GRANTED
         ) {
-            // Permission déjà accordée, démarrer le scanner immédiatement
             setupBarcodeView()
         } else {
-            // Demander la permission
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(android.Manifest.permission.CAMERA),
@@ -288,7 +343,6 @@ class QRScannerActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == CAMERA_PERMISSION_REQUEST) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission accordée, démarrer le scanner
                 setupBarcodeView()
             } else {
                 Toast.makeText(this, "Permission caméra requise", Toast.LENGTH_LONG).show()

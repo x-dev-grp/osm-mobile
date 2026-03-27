@@ -79,4 +79,8 @@
     <string name="welcome">Welcome!</string>
     <string name="quality_since_2026">Quality since 2022</string>
     <string name="fermer">Fermer</string>
+
+
+
+    <string name="manual_entry">Saisir manuellement</string>
 </resources>
