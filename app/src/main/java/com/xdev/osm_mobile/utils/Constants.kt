@@ -2,7 +2,7 @@ package com.xdev.osm_mobile.utils
 
 object Constants {
 
-    const val BASE_URL = "http://192.168.0.254/"
+    const val BASE_URL = "http://10.0.2.2:8084/"   // pour émulateur
 
     // ===== GESTION DE SESSION =====
     const val CLIENT_ID = "osm-client"

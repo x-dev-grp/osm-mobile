@@ -43,15 +43,7 @@
             android:name=".ui.login.LoginActivity"
             android:exported="true" />
 
-        <activity
-            android:name=".ui.resetpassword.ResetPasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.resetpassword.ValidateCodeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.resetpassword.NewPasswordActivity"
-            android:exported="false" />
+
 
 
         <activity android:name=".ui.sync.SyncQueueActivity" />

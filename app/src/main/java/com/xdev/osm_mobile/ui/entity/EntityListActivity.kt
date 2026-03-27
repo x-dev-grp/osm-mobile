@@ -168,7 +168,7 @@ class EntityListActivity : AppCompatActivity() {
             }
 
             is EntityItem.Of -> {
-                val ofNumber = item.data.code
+                val ofNumber = item.data.id
                 if (!ofNumber.isNullOrEmpty()) {
                     startActivity(OfDetailActivity.newIntent(this, ofNumber))
                 } else {

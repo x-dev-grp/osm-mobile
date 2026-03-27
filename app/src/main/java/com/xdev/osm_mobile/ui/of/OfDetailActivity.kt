@@ -24,15 +24,19 @@ class OfDetailActivity : AppCompatActivity() {
         binding = ActivityOfDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val ofId = intent.getStringExtra(EXTRA_OF_ID)
         val ofNumber = intent.getStringExtra(EXTRA_OF_NUMBER)
-        if (ofNumber.isNullOrEmpty()) {
-            Toast.makeText(this, "Numero OF manquant", Toast.LENGTH_SHORT).show()
-            finish()
-            return
-        }
 
-        setupToolbar()
-        loadOfDetails(ofNumber)
+        if (!ofId.isNullOrEmpty()) {
+            setupToolbar()
+            loadOfDetailsById(ofId)
+        } else if (!ofNumber.isNullOrEmpty()) {
+            setupToolbar()
+            loadOfDetailsByNumber(ofNumber)
+        } else {
+            Toast.makeText(this, "Identifiant OF manquant", Toast.LENGTH_SHORT).show()
+            finish()
+        }
     }
 
     private fun setupToolbar() {
@@ -41,10 +45,29 @@ class OfDetailActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-        supportActionBar?.title = "Detail OF"
+        supportActionBar?.title = "Détail OF"
     }
 
-    private fun loadOfDetails(ofNumber: String) {
+    private fun loadOfDetailsById(ofId: String) {
+        lifecycleScope.launch {
+            try {
+                val response = withContext(Dispatchers.IO) {
+                    RetrofitClient.instance.getOfById(ofId)
+                }
+                if (!response.isSuccessful) {
+                    throw IllegalStateException("Erreur chargement OF: ${response.code()}")
+                }
+                of = response.body() ?: throw IllegalStateException("OF non trouvé")
+                displayOfDetails()
+                setupActionButtons()
+            } catch (e: Exception) {
+                Toast.makeText(this@OfDetailActivity, e.message ?: "Erreur", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
+    }
+
+    private fun loadOfDetailsByNumber(ofNumber: String) {
         lifecycleScope.launch {
             try {
                 val found = withContext(Dispatchers.IO) {
@@ -52,17 +75,14 @@ class OfDetailActivity : AppCompatActivity() {
                     if (!response.isSuccessful) {
                         throw IllegalStateException("Erreur chargement OF")
                     }
-
                     response.body().orEmpty().find { it.code == ofNumber }
-                        ?: throw IllegalStateException("OF non trouve")
+                        ?: throw IllegalStateException("OF non trouvé")
                 }
-
                 of = found
                 displayOfDetails()
                 setupActionButtons()
             } catch (e: Exception) {
-                Toast.makeText(this@OfDetailActivity, e.message ?: "Erreur", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this@OfDetailActivity, e.message ?: "Erreur", Toast.LENGTH_SHORT).show()
                 finish()
             }
         }
@@ -75,9 +95,8 @@ class OfDetailActivity : AppCompatActivity() {
             tvStatus.setBackgroundColor(getStatusColor(of.statut))
 
             tvSku.text = of.sku?.code ?: of.skuCode ?: "-"
-            tvProductName.text =
-                of.sku?.category ?: of.ligneConditionnement?.nom ?: of.ligneNom ?: "-"
-            tvLotVrac.text = of.lotVracId ?: "Non defini"
+            tvProductName.text = of.sku?.category ?: of.ligneConditionnement?.nom ?: of.ligneNom ?: "-"
+            tvLotVrac.text = of.lotVracId ?: "Non défini"
 
             tvTargetQuantity.text = formatQuantity(of.quantiteCible)
             tvProducedQuantity.text = formatQuantity(of.quantiteBonne)
@@ -109,11 +128,10 @@ class OfDetailActivity : AppCompatActivity() {
 
     private fun setupActionButtons() {
         binding.btnStartProduction.setOnClickListener {
-            Toast.makeText(this, "Demarrer production (a implementer)", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Démarrer production (à implémenter)", Toast.LENGTH_SHORT).show()
         }
-
         binding.btnPerformQualityControl.setOnClickListener {
-            Toast.makeText(this, "Controle qualite (a implementer)", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Contrôle qualité (à implémenter)", Toast.LENGTH_SHORT).show()
         }
 
         val isActive = of.statut?.uppercase() == "ACTIF"
@@ -122,9 +140,15 @@ class OfDetailActivity : AppCompatActivity() {
     }
 
     companion object {
+        private const val EXTRA_OF_ID = "extra_of_id"
         private const val EXTRA_OF_NUMBER = "extra_of_number"
 
-        fun newIntent(context: Context, ofNumber: String): Intent =
+        fun newIntent(context: Context, ofId: String): Intent =
+            Intent(context, OfDetailActivity::class.java).apply {
+                putExtra(EXTRA_OF_ID, ofId)
+            }
+
+        fun newIntentByNumber(context: Context, ofNumber: String): Intent =
             Intent(context, OfDetailActivity::class.java).apply {
                 putExtra(EXTRA_OF_NUMBER, ofNumber)
             }

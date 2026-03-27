@@ -7,11 +7,13 @@ import com.xdev.osm_mobile.network.models.ColisDto
 import com.xdev.osm_mobile.network.models.LotDto
 import com.xdev.osm_mobile.network.models.OrderFabricationDTO
 import com.xdev.osm_mobile.network.models.PaletteDto
+import com.xdev.osm_mobile.network.models.QrResolveResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
 
@@ -47,4 +49,19 @@ interface ApiService {
 
     @GET("/api/ordreConditionement/of/all")
     suspend fun getOfs(): Response<List<OrderFabricationDTO>>
+
+
+
+
+    @GET("api/qr/resolve/{entityType}/{publicCode}")
+    suspend fun resolveQr(
+        @Path("entityType") entityType: String,
+        @Path("publicCode") publicCode: String
+    ): Response<QrResolveResponse>
+
+
+
+    @GET("api/ordreConditionement/of/{id}")
+    suspend fun getOfById(@Path("id") id: String): Response<OrderFabricationDTO>
+
 }
