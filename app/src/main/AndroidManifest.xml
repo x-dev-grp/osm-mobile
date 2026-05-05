@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".OSMApplication"
@@ -19,44 +20,47 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.osm_mobile"
         android:usesCleartextTraffic="true">
-
         <activity
-            android:name=".ui.entity.EntityListActivity"
+            android:name=".QCHistoryDetailActivity"
             android:exported="false" />
-
-
         <activity
-            android:name=".ui.scan.QRScannerActivity"
+            android:name=".StockMovementScannerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ArticleDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.StockApp"/>
+        <activity
+            android:name=".ManualCodeEntryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProductionEntryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".QCActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EntityListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".QRScannerActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.OSMMobile" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".LoginActivity"
             android:exported="true" />
-
-        <activity
-            android:name=".ui.resetpassword.ResetPasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.resetpassword.ValidateCodeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.resetpassword.NewPasswordActivity"
-            android:exported="false" />
-
-
-        <activity android:name=".ui.sync.SyncQueueActivity" />
-
-        <activity android:name=".ui.of.OfDetailActivity" />
+        <activity android:name=".SyncQueueActivity" />
+        <activity android:name=".OfDetailActivity" />
     </application>
+
 
 </manifest>

@@ -79,4 +79,22 @@
     <string name="welcome">Welcome!</string>
     <string name="quality_since_2026">Quality since 2022</string>
     <string name="fermer">Fermer</string>
+        <string name="article_detail_title">Détail Article</string>
+        <string name="label_general_info">Informations générales</string>
+        <string name="label_name">Nom</string>
+        <string name="label_category">Catégorie</string>
+        <string name="label_status">Statut</string>
+        <string name="label_stock">Stock</string>
+        <string name="label_quantity">Quantité</string>
+        <string name="label_location">Emplacement</string>
+        <string name="label_location_code">Code</string>
+    <string name="label_unit">Unité</string>
+    <string name="label_supplier">Fournisseur</string>
+    <string name="label_stock_min">Stock min</string>
+    <string name="label_stock_max">Stock max</string>
+    <string name="label_location_name">Nom emplacement</string>
+    <string name="label_location_zone">Zone</string>
+    <string name="label_location_type">Type</string>
+    <string name="label_location_available">Disponible</string>
+    <string name="label_configuration">Configuration</string>
 </resources>

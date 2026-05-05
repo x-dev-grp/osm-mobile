@@ -2,7 +2,11 @@ package com.xdev.osm_mobile.utils
 
 object Constants {
 
-    const val BASE_URL = "http://192.168.0.254/"
+  //const val BASE_URL = "http://10.0.2.2:8084/"
+
+ const val BASE_URL = "http://192.168.100.9:8084/"
+
+
 
     // ===== GESTION DE SESSION =====
     const val CLIENT_ID = "osm-client"
@@ -16,7 +20,5 @@ object Constants {
     const val KEY_IS_NEW_USER = "is_new_user"
     const val KEY_USER_ROLE = "user_role"
     const val KEY_USER_PERMISSIONS = "user_permissions"
-
-    // ===== SÉCURITÉ QR CODE =====
     const val QR_SECRET = "osm-secret-key-2026-xdev-group-secure-qr"
 }
