@@ -22,5 +22,21 @@
     <color name="text_white">#FFFFFF</color>         <!-- Blanc -->
 
     <!-- États -->
-    <color name="error">#C45A5A</color>              <!-- Rouge doux -->
+    <color name="error">#C45A5A</color>
+
+
+        <color name="purple_500">#6200EE</color>
+        <color name="purple_700">#3700B3</color>
+        <color name="teal_200">#03DAC5</color>
+        <color name="teal_700">#018786</color>
+        <color name="black">#FF000000</color>
+        <color name="white">#FFFFFFFF</color>
+
+        <!-- Couleurs supplémentaires -->
+        <color name="gray_light">#F5F5F5</color>
+        <color name="gray_medium">#E0E0E0</color>
+        <color name="status_available">#4CAF50</color>
+        <color name="status_low_stock">#FF9800</color>
+        <color name="status_out_of_stock">#F44336</color>
+
 </resources>

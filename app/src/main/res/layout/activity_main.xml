@@ -47,9 +47,9 @@
                 android:layout_height="wrap_content"
                 android:alignmentMode="alignMargins"
                 android:columnCount="2"
-                android:rowCount="3">
+                android:rowCount="2">
 
-                <!-- Production Orders Card -->
+                <!-- Orders (OF) -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardOF"
                     style="@style/Widget.OSM.Card"
@@ -83,9 +83,9 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Storage Units Card -->
+                <!-- Mouvement de stock -->
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardUnite"
+                    android:id="@+id/cardStockMovement"
                     style="@style/Widget.OSM.Card"
                     android:layout_width="0dp"
                     android:layout_height="140dp"
@@ -105,7 +105,7 @@
                         <ImageView
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:src="@android:drawable/ic_popup_disk_full"
+                            android:src="@drawable/ic_stock_movement"
                             app:tint="@color/olive_green" />
 
                         <TextView
@@ -113,13 +113,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="Storage Units" />
+                            android:text="Mouvement de stock" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Colis Card -->
+                <!-- Historique QC -->
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardColis"
+                    android:id="@+id/cardQCHistory"
                     style="@style/Widget.OSM.Card"
                     android:layout_width="0dp"
                     android:layout_height="140dp"
@@ -139,7 +139,7 @@
                         <ImageView
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:src="@android:drawable/ic_menu_view"
+                            android:src="@android:drawable/ic_menu_recent_history"
                             app:tint="@color/olive_green" />
 
                         <TextView
@@ -147,109 +147,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="Colis" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Palette Card -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardPalette"
-                    style="@style/Widget.OSM.Card"
-                    android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@android:drawable/ic_menu_gallery"
-                            app:tint="@color/olive_green" />
-
-                        <TextView
-                            style="@style/TextAppearance.OSM.CardTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Palette" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Lot Card -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardLot"
-                    style="@style/Widget.OSM.Card"
-                    android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@android:drawable/ic_menu_manage"
-                            app:tint="@color/olive_green" />
-
-                        <TextView
-                            style="@style/TextAppearance.OSM.CardTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Lots" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Filtration Card -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardFiltration"
-                    style="@style/Widget.OSM.Card"
-                    android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@android:drawable/ic_menu_search"
-                            app:tint="@color/olive_gold" />
-
-                        <TextView
-                            style="@style/TextAppearance.OSM.CardTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Filtration" />
+                            android:text="Historique QC" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -258,6 +156,25 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <!-- Nouveau FAB : saisie manuelle (icône de recherche) -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabManualEntry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="216dp"
+        android:alpha="0.0"
+        android:contentDescription="Saisie manuelle"
+        android:scaleX="0.0"
+        android:scaleY="0.0"
+        android:visibility="gone"
+        app:backgroundTint="@color/olive_cream"
+        app:elevation="6dp"
+        app:maxImageSize="24dp"
+        app:srcCompat="@android:drawable/ic_menu_search"
+        app:tint="@color/olive_green" />
+
     <!-- FAB pour le scan (caché initialement) -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabStartScan"
@@ -265,7 +182,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="152dp"
+        android:layout_marginBottom="88dp"
         android:alpha="0.0"
         android:contentDescription="Lancer le scan"
         android:scaleX="0.0"
@@ -277,14 +194,14 @@
         app:srcCompat="@android:drawable/ic_menu_camera"
         app:tint="@android:color/white" />
 
-    <!-- FAB pour l'historique (caché initialement) - CORRIGÉ -->
+    <!-- FAB pour l'historique (caché initialement) -->
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fabScanHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="152dp"
         android:alpha="0.0"
         android:contentDescription="Historique des scans"
         android:scaleX="0.0"

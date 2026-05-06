@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:layout_marginBottom="12dp"
+    android:background="@android:drawable/editbox_background">
+
+    <TextView
+        android:id="@+id/tvControlPointName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvControlPointType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray" />
+
+    <EditText
+        android:id="@+id/etControlPointValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Valeur mesurée"
+        android:layout_marginTop="8dp"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/etControlPointComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Commentaire (optionnel)"
+        android:layout_marginTop="4dp"
+        android:inputType="textMultiLine" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/btnControlPointPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prendre photo"
+            android:backgroundTint="?attr/colorSecondary" />
+
+        <ImageView
+            android:id="@+id/ivControlPointPhoto"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            android:layout_marginStart="12dp"
+            android:contentDescription="Photo du point"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

@@ -18,14 +18,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="8dp">
-
+            android:orientation="vertical">
             <!-- Titre OF -->
             <TextView
                 android:layout_width="match_parent"
@@ -35,7 +34,7 @@
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textStyle="bold" />
 
-            <!-- Numéro OF -->
+            <!-- Numéro OF et Statut -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,12 +157,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Libellé :"
+                            android:text="Ligne :"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/tvProductName"
+                            android:id="@+id/tvLigne"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -296,6 +295,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="2dp">
 
@@ -317,13 +317,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:weightSum="2"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Planifiée :"
+                            android:text="Début prévue :"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -339,9 +341,35 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:weightSum="2"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Fin prévue :"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvPlannedEndDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="—"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp">
 
                         <TextView
                             android:layout_width="0dp"
@@ -363,9 +391,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:weightSum="2"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp">
 
                         <TextView
                             android:layout_width="0dp"
@@ -385,10 +414,46 @@
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+            <!-- Composants consommés -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="Composants consommés"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvComponents"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Espace supplémentaire pour éviter que le dernier élément soit collé en bas -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
         </LinearLayout>
     </ScrollView>
 
-    <!-- Boutons d'action -->
+    <!-- Boutons d'action fixes en bas -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -416,7 +481,5 @@
             android:backgroundTint="?attr/colorSecondary"
             android:text="Contrôle qualité"
             android:textColor="@android:color/white" />
-
     </LinearLayout>
-
 </LinearLayout>
