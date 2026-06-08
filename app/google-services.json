@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "288986438687",
+    "project_id": "osm-mobile-3ced5",
+    "storage_bucket": "osm-mobile-3ced5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288986438687:android:0bcfd30a7aa0c097d7892a",
+        "android_client_info": {
+          "package_name": "com.xdev.osm_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwGtqVHpKQJ4yRuvsOUUuKuFOuGp-e4pY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

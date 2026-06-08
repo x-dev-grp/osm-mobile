@@ -22,5 +22,66 @@
     <color name="text_white">#FFFFFF</color>         <!-- Blanc -->
 
     <!-- États -->
-    <color name="error">#C45A5A</color>              <!-- Rouge doux -->
+    <color name="error">#C45A5A</color>
+
+
+        <color name="purple_500">#6200EE</color>
+        <color name="purple_700">#3700B3</color>
+        <color name="teal_200">#03DAC5</color>
+        <color name="teal_700">#018786</color>
+        <color name="black">#FF000000</color>
+        <color name="white">#FFFFFFFF</color>
+
+        <!-- Couleurs supplémentaires -->
+        <color name="gray_light">#F5F5F5</color>
+        <color name="gray_medium">#E0E0E0</color>
+        <color name="status_available">#4CAF50</color>
+        <color name="status_low_stock">#FF9800</color>
+        <color name="status_out_of_stock">#F44336</color>
+
+        <!-- Nouveaux tokens de couleur pour la refonte -->
+        <color name="abiooc_primary">#5C6B3F</color> <!-- Vert Olive foncé pour le haut et les boutons -->
+        <color name="abiooc_bg">#F9FAF6</color> <!-- Blanc cassé / très léger vert pour le fond -->
+        <color name="abiooc_text_dark">#2C3E2F</color>
+        <color name="abiooc_text_gray">#7F8C8D</color>
+        <color name="abiooc_card_bg">#FFFFFF</color>
+        <color name="abiooc_stroke">#EAECE5</color>
+        <color name="abiooc_accent_green">#75A642</color>
+        <color name="abiooc_accent_orange">#E67E22</color>
+        <color name="abiooc_accent_blue">#4A90E2</color>
+        <color name="abiooc_accent_purple">#9B59B6</color>
+        <color name="abiooc_error">#E74C3C</color>
+        <color name="abiooc_error_light">#FDEDEC</color>
+    
+        <!-- Nouveaux tokens pour ArticleDetail -->
+        <color name="tag_green_bg">#E8F5E9</color>
+        <color name="tag_green_text">#2E7D32</color>
+        <color name="tag_blue_bg">#E1F5FE</color>
+        <color name="tag_blue_text">#0277BD</color>
+        <color name="tag_purple_bg">#F3E5F5</color>
+        <color name="tag_purple_text">#7B1FA2</color>
+        <color name="stock_box_bg">#FDFCF8</color>
+        <color name="abiooc_bg_light">#F8F9FA</color>
+        <color name="abiooc_icon_bg">#E8F5E9</color>
+        <color name="sync_pending_bg">#FFF8E1</color>
+        <color name="sync_pending_text">#FF8F00</color>
+        <color name="sync_success_bg">#E8F5E9</color>
+        <color name="sync_success_text">#2E7D32</color>
+        <color name="sync_error_bg">#FFEBEE</color>
+        <color name="sync_error_text">#C62828</color>
+        <color name="sync_item_bg">#FDFCFB</color>
+        <color name="sync_chip_unselected">#F5F5F5</color>
+        <color name="status_in_progress_bg">#E8F5E9</color>
+        <color name="status_in_progress_text">#2E7D32</color>
+        <color name="status_planned_bg">#F3E5F5</color>
+        <color name="status_planned_text">#7B1FA2</color>
+        <color name="status_suspended_bg">#FFF3E0</color>
+        <color name="status_suspended_text">#EF6C00</color>
+        <color name="status_cancelled_bg">#FFEBEE</color>
+        <color name="status_cancelled_text">#C62828</color>
+        <color name="status_completed_bg">#F1F8E9</color>
+        <color name="status_completed_text">#558B2F</color>
+        <color name="abiooc_login_green">#006847</color>
+        <color name="abiooc_login_bg">#F5F5F5</color>
+
 </resources>
