@@ -1,5 +1,6 @@
 package com.xdev.osm_mobile.network
 
+import android.util.Log
 import com.google.gson.GsonBuilder
 import com.xdev.osm_mobile.models.ArticleConfig
 import com.xdev.osm_mobile.models.ArticleConfigDeserializer
@@ -14,13 +15,11 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BASIC
+        level = HttpLoggingInterceptor.Level.BODY
     }
-
     private val authInterceptor = Interceptor { chain ->
         val original = chain.request()
         val requestBuilder = original.newBuilder()
-
         val path = original.url.encodedPath
 
         if (path.contains("oauth2/token")) {
@@ -32,49 +31,54 @@ object RetrofitClient {
                 requestBuilder.header("Authorization", "Bearer $token")
             }
             val tenantId = com.xdev.osm_mobile.OSMApplication.sessionManager.getTenantId()
+            Log.d("RetrofitClient", "X-Tenant-Id envoyé: '$tenantId' pour $path")
             if (!tenantId.isNullOrBlank()) {
                 requestBuilder.header("X-Tenant-Id", tenantId)
+            } else {
+                Log.w("RetrofitClient", "X-Tenant-Id est NULL ou VIDE — le backend retournera []")
             }
         }
+
         requestBuilder.header("Accept", "application/json")
         chain.proceed(requestBuilder.build())
     }
-
     private val tokenAuthenticator = object : okhttp3.Authenticator {
         override fun authenticate(
             route: okhttp3.Route?,
             response: okhttp3.Response
         ): okhttp3.Request? {
             if (response.priorResponse?.priorResponse != null) {
+                Log.e("RetrofitClient", "Token refresh échoué après 2 tentatives")
                 return null
             }
-
             synchronized(this) {
                 val sessionManager = com.xdev.osm_mobile.OSMApplication.sessionManager
                 val refreshToken = sessionManager.getRefreshToken()
                 val currentToken = sessionManager.getAccessToken()
-                if (refreshToken.isNullOrBlank()) return null
+                if (refreshToken.isNullOrBlank()) {
+                    Log.e("RetrofitClient", "Pas de refresh token disponible")
+                    return null
+                }
                 val requestToken = response.request.header("Authorization")?.replace("Bearer ", "")
                 if (!currentToken.isNullOrBlank() && requestToken != currentToken) {
+                    Log.d("RetrofitClient", "Token déjà rafraîchi, réutilisation")
                     return response.request.newBuilder()
                         .header("Authorization", "Bearer $currentToken")
                         .build()
                 }
                 val refreshClient = OkHttpClient.Builder()
                     .addInterceptor(loggingInterceptor)
-                    .addInterceptor { chain ->
-                        val request = chain.request().newBuilder()
+                    .addInterceptor { innerChain ->
+                        val request = innerChain.request().newBuilder()
                             .header(
                                 "Authorization",
-                                okhttp3.Credentials.basic(
-                                    Constants.CLIENT_ID,
-                                    Constants.CLIENT_SECRET
-                                )
+                                Credentials.basic(Constants.CLIENT_ID, Constants.CLIENT_SECRET)
                             )
                             .build()
-                        chain.proceed(request)
+                        innerChain.proceed(request)
                     }
                     .build()
+
                 val refreshService = Retrofit.Builder()
                     .baseUrl(Constants.BASE_URL)
                     .client(refreshClient)
@@ -82,28 +86,40 @@ object RetrofitClient {
                     .build()
                     .create(ApiService::class.java)
 
-                try {
+                return try {
                     val refreshResponse =
                         refreshService.refreshTokenSync("refresh_token", refreshToken).execute()
+
                     if (refreshResponse.isSuccessful && refreshResponse.body() != null) {
                         val auth = refreshResponse.body()!!
                         sessionManager.saveAuthTokens(auth.accessToken, auth.refreshToken)
-                        return response.request.newBuilder()
+                        Log.d("RetrofitClient", "Token rafraîchi avec succès")
+                        val tenantId = sessionManager.getTenantId()
+                        val newRequest = response.request.newBuilder()
                             .header("Authorization", "Bearer ${auth.accessToken}")
+                            .apply {
+                                if (!tenantId.isNullOrBlank()) {
+                                    header("X-Tenant-Id", tenantId)
+                                }
+                            }
                             .build()
+                        newRequest
+                    } else {
+                        Log.e("RetrofitClient", "Refresh token refusé: ${refreshResponse.code()}")
+                        null
                     }
                 } catch (e: Exception) {
-                    e.printStackTrace()
+                    Log.e("RetrofitClient", "Exception lors du refresh token", e)
+                    null
                 }
             }
-            return null
         }
     }
 
     private val gson = GsonBuilder()
         .registerTypeAdapter(ArticleConfig::class.java, ArticleConfigDeserializer())
+        .serializeNulls()
         .create()
-
     private val client = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
         .addInterceptor(authInterceptor)

@@ -21,6 +21,22 @@
         android:theme="@style/Theme.osm_mobile"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ExpeditionPickingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AllStockListActivity"
+            android:exported="false" />
+        <activity android:name=".StockMovementListActivity" />
+        <activity
+            android:name=".ExpeditionScannerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ExpeditionDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ExpeditionListActivity"
+            android:exported="false" />
+        <activity
             android:name=".QCHistoryDetailActivity"
             android:exported="false" />
         <activity
@@ -29,7 +45,7 @@
         <activity
             android:name=".ArticleDetailActivity"
             android:exported="false"
-            android:theme="@style/Theme.StockApp"/>
+            android:theme="@style/Theme.StockApp" />
         <activity
             android:name=".ManualCodeEntryActivity"
             android:exported="false" />
@@ -61,6 +77,5 @@
         <activity android:name=".SyncQueueActivity" />
         <activity android:name=".OfDetailActivity" />
     </application>
-
 
 </manifest>

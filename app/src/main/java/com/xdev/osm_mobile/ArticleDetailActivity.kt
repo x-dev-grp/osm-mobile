@@ -12,41 +12,34 @@ import androidx.lifecycle.lifecycleScope
 import com.google.gson.GsonBuilder
 import com.xdev.osm_mobile.databinding.ActivityArticleDetailBinding
 import com.xdev.osm_mobile.horsligne.NetworkUtils
-import com.xdev.osm_mobile.models.AccessoireConfig
-import com.xdev.osm_mobile.models.ArticleConfig
-import com.xdev.osm_mobile.models.ArticleConfigDeserializer
-import com.xdev.osm_mobile.models.ArticleSecDto
-import com.xdev.osm_mobile.models.ColisConfig
-import com.xdev.osm_mobile.models.ConsommableConfig
-import com.xdev.osm_mobile.models.EmballageConfig
-import com.xdev.osm_mobile.models.EmplacementStockDto
-import com.xdev.osm_mobile.models.MatierePremiereConfig
-import com.xdev.osm_mobile.models.PaletteConfig
-import com.xdev.osm_mobile.models.StockSecDto
-import com.xdev.osm_mobile.models.UniteConfig
-import com.xdev.osm_mobile.network.RetrofitClient
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import com.xdev.osm_mobile.models.*
 import kotlinx.coroutines.launch
+import android.widget.GridLayout
+import android.graphics.Typeface
+import androidx.core.content.ContextCompat
 
 class ArticleDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityArticleDetailBinding
     private lateinit var article: ArticleSecDto
     private var stock: StockSecDto? = null
+    private var articleId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityArticleDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.abiooc_bg_light)
+        window.decorView.systemUiVisibility = android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         setupToolbar()
-        val articleId = intent.getStringExtra(EXTRA_ARTICLE_ID)
-        if (articleId.isNullOrEmpty()) {
+        articleId = intent.getStringExtra(EXTRA_ARTICLE_ID) ?: ""
+        if (articleId.isEmpty()) {
             Toast.makeText(this, "ID article manquant", Toast.LENGTH_SHORT).show()
             finish()
             return
         }
-        loadArticleDetails(articleId)
+        loadArticleDetails()
     }
+
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -55,31 +48,37 @@ class ArticleDetailActivity : AppCompatActivity() {
         }
         supportActionBar?.title = "Détail article"
     }
-    private fun loadArticleDetails(articleId: String) {
+    private fun loadArticleDetails() {
+        Log.d("ArticleDetail", "loadArticleDetails for id=$articleId")
         val repository = OSMApplication.repository
-        val gson = GsonBuilder()
-            .registerTypeAdapter(ArticleConfig::class.java, ArticleConfigDeserializer())
-            .create()
-
+        val gson = GsonBuilder().registerTypeAdapter(ArticleConfig::class.java, ArticleConfigDeserializer()).create()
         lifecycleScope.launch {
-            // 1. Rafraîchir l'article et son stock si connecté
             if (NetworkUtils.isInternetAvailable(this@ArticleDetailActivity)) {
                 try {
                     repository.refreshArticle(articleId)
                     repository.refreshStock(articleId)
+                    Log.d("ArticleDetail", "Synchronisation OK depuis le backend")
                 } catch (e: Exception) {
-                    Log.e("ArticleDetail", "Erreur refresh", e)
+                    Log.e("ArticleDetail", "Erreur synchronisation", e)
+                    Toast.makeText(
+                        this@ArticleDetailActivity,
+                        "Erreur de synchronisation, affichage du cache existant",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+            } else {
+                Log.d("ArticleDetail", "Mode hors ligne, affichage du cache local")
+                Toast.makeText(
+                    this@ArticleDetailActivity,
+                    "Mode hors ligne – données en cache",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-
-            // 2. Charger depuis le cache local
             val cachedArticle = repository.getArticleById(articleId)
             val cachedStock = repository.getStockByArticle(articleId)
-
             if (cachedArticle?.fullJson != null) {
                 article = gson.fromJson(cachedArticle.fullJson, ArticleSecDto::class.java)
                 stock = if (cachedStock != null) {
-                    // Convertir StockEntity → StockSecDto pour garder la compatibilité avec l'affichage existant
                     StockSecDto(
                         id = cachedStock.id,
                         quantiteActuelle = cachedStock.quantiteActuelle,
@@ -98,7 +97,11 @@ class ArticleDetailActivity : AppCompatActivity() {
                 } else null
                 displayArticleDetails()
             } else {
-                Toast.makeText(this@ArticleDetailActivity, "Article non trouvé en cache", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@ArticleDetailActivity,
+                    "Article non trouvé (aucune donnée locale)",
+                    Toast.LENGTH_SHORT
+                ).show()
                 finish()
             }
         }
@@ -106,16 +109,27 @@ class ArticleDetailActivity : AppCompatActivity() {
     private fun displayArticleDetails() {
         with(binding) {
             tvArticleName.text = article.nom ?: "-"
-            tvCategory.text = article.categorie ?: "-"
-            tvUnit.text = article.um ?: "-"
-            tvStatus.text = if (article.actif == true) "Actif" else "Inactif"
-            tvStockMin.text = article.stockMinimum?.toString() ?: "-"
-            tvStockMax.text = article.stockMaximum?.toString() ?: "-"
-            tvSupplier.text = article.fournisseur?.nom ?: "-"
-
+            tvSku.text = article.qrHex ?: "SKU-${article.id?.takeLast(5) ?: "00000"}"
+            tvUnitTag.text = article.um ?: "Unité"
+            tvStatusTag.text = if (article.actif == true) "Actif" else "Inactif"
+            tvStatusTag.setBackgroundResource(
+                if (article.actif == true) R.drawable.bg_tag_green else R.drawable.bg_status_nok
+            )
+            tvPieceTag.text = article.categorie ?: "Article"
             val quantity = stock?.quantiteActuelle ?: 0
-            tvStockQuantity.text = "$quantity ${article.um ?: "u"}"
-
+            tvStockQuantity.text = String.format("%,d", quantity)
+            val min = article.stockMinimum ?: 0
+            val max = article.stockMaximum ?: 0
+            tvStockMinMax.text = "$min / $max"
+            val supplierName = article.fournisseur?.nom ?: "Fournisseur inconnu"
+            tvSupplierName.text = supplierName
+            tvSupplierInitials.text = if (supplierName.length >= 2) supplierName.take(2).uppercase() else "VE"
+            tvSupplierDetails.text = "Fournisseur certifié — ${article.categorie ?: "Matériel"}"
+            btnStockMovement.setOnClickListener {
+                val intent = Intent(this@ArticleDetailActivity, StockMovementScannerActivity::class.java)
+                intent.putExtra("articleId", article.id)
+                startActivity(intent)
+            }
             val emplacement = stock?.emplacement
             if (emplacement != null) {
                 tvEmplacementCode.text = emplacement.code ?: "-"
@@ -133,99 +147,96 @@ class ArticleDetailActivity : AppCompatActivity() {
         }
         displayConfiguration()
     }
+
     private fun displayConfiguration() {
-        binding.configurationContainer.removeAllViews()
+        binding.configGrid.removeAllViews()
         val config = article.configuration ?: return
-
-        addSectionTitle("Configuration (${article.categorie})")
-
+        binding.tvConfigTitle.text = "CONFIGURATION — ${article.categorie?.uppercase() ?: "ARTICLE"}"
         when (config) {
             is UniteConfig -> {
-                addDetailLine("Matériau", config.material)
-                addDetailLine("Volume (ml)", config.volumeMl?.toString())
-                addDetailLine("Couleur", config.color)
-                addDetailLine("Type de col", config.neckType)
-                addDetailLine("Poids (g)", config.weightGr?.toString())
+                addGridItem("Matériau", config.material)
+                addGridItem("Volume", config.volumeMl?.let { "$it ml" })
+                addGridItem("Couleur", config.color)
+                addGridItem("Col (neck)", config.neckType)
+                addGridItem("Poids", config.weightGr?.let { "$it g" })
+                addGridItem("Catégorie", article.categorie)
             }
             is ColisConfig -> {
-                addDetailLine("Unités par colis", config.unitsPerColis?.toString())
+                addGridItem("Unités/colis", config.unitsPerColis?.toString())
                 config.dimensions?.let {
-                    addDetailLine("Dimensions (L×l×h)", "${it.length}×${it.width}×${it.height}")
+                    addGridItem("Dimensions", "${it.length}×${it.width}×${it.height}")
                 }
-                addDetailLine("Poids max (kg)", config.maxWeightKg?.toString())
+                addGridItem("Poids max", config.maxWeightKg?.let { "$it kg" })
             }
             is PaletteConfig -> {
-                addDetailLine("Type", config.type)
-                addDetailLine("Matériau", config.material)
-                addDetailLine("Colis par couche", config.colisPerLayer?.toString())
-                addDetailLine("Nombre de couches", config.numberOfLayers?.toString())
-                addDetailLine("Hauteur max (cm)", config.maxHeightCm?.toString())
-                addDetailLine("Palette client", if (config.clientSpecific == true) "Oui" else "Non")
+                addGridItem("Type", config.type)
+                addGridItem("Matériau", config.material)
+                addGridItem("Colis/couche", config.colisPerLayer?.toString())
+                addGridItem("Couches", config.numberOfLayers?.toString())
+                addGridItem("H. max", config.maxHeightCm?.let { "$it cm" })
             }
             is EmballageConfig -> {
-                addDetailLine("Sous-type", config.sousType)
-                addDetailLine("Matériau", config.material)
+                addGridItem("Sous-type", config.sousType)
+                addGridItem("Matériau", config.material)
                 config.dimensions?.let {
-                    addDetailLine("Dimensions", "${it.length}×${it.width}×${it.height}")
+                    addGridItem("Dimensions", "${it.length}×${it.width}×${it.height}")
                 }
-                addDetailLine("Branding client", if (config.clientBranding == true) "Oui" else "Non")
-                addDetailLine("Poids (g)", config.poidsGrammes?.toString())
             }
             is ConsommableConfig -> {
-                addDetailLine("Sous-type", config.sousType)
-                addDetailLine("Usage", config.usage)
-                addDetailLine("Unité", config.unit)
-                addDetailLine("Quantité", config.quantity?.toString())
-                addDetailLine("Temp. stockage (°C)", config.temperatureStockageCelsius?.toString())
+                addGridItem("Sous-type", config.sousType)
+                addGridItem("Usage", config.usage)
+                addGridItem("Unité", config.unit)
+                addGridItem("Quantité", config.quantity?.toString())
             }
             is MatierePremiereConfig -> {
-                addDetailLine("Sous-type", config.sousType)
-                addDetailLine("Origine", config.origin)
-                addDetailLine("Grade qualité", config.qualityGrade)
-                addDetailLine("Densité", config.density?.toString())
-                addDetailLine("Certifié bio", if (config.certifieBio == true) "Oui" else "Non")
+                addGridItem("Sous-type", config.sousType)
+                addGridItem("Origine", config.origin)
+                addGridItem("Qualité", config.qualityGrade)
+                addGridItem("Densité", config.density?.toString())
             }
             is AccessoireConfig -> {
-                addDetailLine("Sous-type", config.sousType)
-                addDetailLine("Usage", config.usage)
-                addDetailLine("Montage requis", if (config.necessiteMontage == true) "Oui" else "Non")
-                addDetailLine("Garantie (mois)", config.garantieMois?.toString())
+                addGridItem("Sous-type", config.sousType)
+                addGridItem("Usage", config.usage)
+                addGridItem("Garantie", config.garantieMois?.let { "$it mois" })
             }
         }
     }
-    private fun addSectionTitle(title: String) {
-        val textView = TextView(this).apply {
-            text = title
-            setTextAppearance(com.google.android.material.R.style.TextAppearance_MaterialComponents_Headline6)
-            setPadding(0, 24, 0, 8)
-        }
-        binding.configurationContainer.addView(textView)
-    }
-
-    private fun addDetailLine(label: String, value: String?) {
+    private fun addGridItem(label: String, value: String?) {
         if (value.isNullOrBlank()) return
-        val labelTv = TextView(this).apply {
-            text = "$label : "
-            setTextAppearance(com.google.android.material.R.style.TextAppearance_MaterialComponents_Subtitle2)
+        val context = this
+        val itemLayout = LinearLayout(context).apply {
+            orientation = LinearLayout.VERTICAL
+            val p16 = 16.dpToPx()
+            val p12 = 12.dpToPx()
+            setPadding(p16, p12, p16, p12)
+            val params = GridLayout.LayoutParams()
+            params.width = 0
+            params.height = GridLayout.LayoutParams.WRAP_CONTENT
+            params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
+            layoutParams = params
         }
-        val valueTv = TextView(this).apply {
+        val labelTv = TextView(context).apply {
+            text = label
+            setTextColor(ContextCompat.getColor(context, R.color.abiooc_text_gray))
+            textSize = 12f
+        }
+        val valueTv = TextView(context).apply {
             text = value
-            setTextAppearance(com.google.android.material.R.style.TextAppearance_MaterialComponents_Body1)
+            setTextColor(ContextCompat.getColor(context, R.color.abiooc_text_dark))
+            textSize = 14f
+            setTypeface(null, Typeface.BOLD)
+            setPadding(0, 4.dpToPx(), 0, 0)
         }
-        val linearLayout = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            addView(labelTv)
-            addView(valueTv)
-        }
-        binding.configurationContainer.addView(linearLayout)
+        itemLayout.addView(labelTv)
+        itemLayout.addView(valueTv)
+        itemLayout.setBackgroundResource(R.drawable.bg_grid_item)
+        binding.configGrid.addView(itemLayout)
     }
-
+    private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
     companion object {
         private const val EXTRA_ARTICLE_ID = "extra_article_id"
-
         fun newIntent(context: Context, articleId: String): Intent =
             Intent(context, ArticleDetailActivity::class.java).apply {
                 putExtra(EXTRA_ARTICLE_ID, articleId)
-            }
-    }
+            } }
 }

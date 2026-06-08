@@ -5,10 +5,6 @@ object Constants {
   //const val BASE_URL = "http://10.0.2.2:8084/"
 
  const val BASE_URL = "http://192.168.100.9:8084/"
-
-
-
-    // ===== GESTION DE SESSION =====
     const val CLIENT_ID = "osm-client"
     const val CLIENT_SECRET = "X7kP9mN2vQ8rT4wY6zA1bC3dE5fG8hJ9"
     const val PREF_NAME = "osm_mobile_prefs"

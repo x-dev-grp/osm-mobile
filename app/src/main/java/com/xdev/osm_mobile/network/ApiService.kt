@@ -6,7 +6,10 @@ import com.xdev.osm_mobile.models.ArticleSecDto
 import com.xdev.osm_mobile.models.AuthResponse
 import com.xdev.osm_mobile.models.BomDto
 import com.xdev.osm_mobile.models.ColisDto
+import com.xdev.osm_mobile.models.ExpeditionActionRequest
+import com.xdev.osm_mobile.models.ExpeditionDto
 import com.xdev.osm_mobile.models.LotDto
+import com.xdev.osm_mobile.models.MouvementStockSecDto
 import com.xdev.osm_mobile.models.OrderFabricationDTO
 import com.xdev.osm_mobile.models.PaletteDto
 import com.xdev.osm_mobile.models.QCControlPointDTO
@@ -73,6 +76,10 @@ interface ApiService {
     suspend fun resolveOF(@Path("publicCode") publicCode: String): Response<QrResolveResponse>
     @GET("/api/inventaire/articles/resolve/{publicCode}")
     suspend fun resolveArticle(@Path("publicCode") publicCode: String): Response<QrResolveResponse>
+    @GET("/api/expeditions/resolve/{publicCode}")
+    suspend fun resolveExpedition(
+        @Path("publicCode") publicCode: String
+    ): Response<QrResolveResponse>
     @GET("/api/inventaire/articles/{id}")
     suspend fun getArticleById(@Path("id") id: String): Response<ArticleSecDto>
     @GET("/api/inventaire/stocks/article/{articleId}")
@@ -113,12 +120,50 @@ interface ApiService {
     @GET("/api/inventaire/boms/{id}")
     suspend fun getBomById(@Path("id") id: String): Response<BomDto>
 
+    @GET("/api/expeditions")
+    suspend fun getExpeditions(): Response<List<ExpeditionDto>>
 
+    @GET("/api/expeditions/{id}")
+    suspend fun getExpeditionById(@Path("id") id: String): Response<ExpeditionDto>
 
+    @GET("/api/expeditions/project/{projectId}")
+    suspend fun getExpeditionsByProject(
+        @Path("projectId") projectId: String
+    ): Response<List<ExpeditionDto>>
+    @POST("/api/expeditions/{id}/ready")
+    suspend fun markExpeditionReady(
+        @Path("id") id: String,
+        @Body request: ExpeditionActionRequest
+    ): Response<ExpeditionDto>
 
+    @POST("/api/expeditions/{id}/ship")
+    suspend fun shipExpedition(
+        @Path("id") id: String,
+        @Body request: ExpeditionActionRequest
+    ): Response<ExpeditionDto>
 
+    @POST("/api/expeditions/{id}/validate")
+    suspend fun validateExpedition(
+        @Path("id") id: String,
+        @Body request: ExpeditionActionRequest
+    ): Response<ExpeditionDto>
 
+    @POST("/api/expeditions/{id}/deliver")
+    suspend fun deliverExpedition(
+        @Path("id") id: String,
+        @Body request: ExpeditionActionRequest
+    ): Response<ExpeditionDto>
 
+// Add these inside ApiService interface
+
+    @GET("/api/inventaire/stocks/mouvements")
+    suspend fun getAllStockMovements(): Response<List<MouvementStockSecDto>>
+
+    @GET("/api/inventaire/stocks")
+    suspend fun getAllStocks(): Response<List<StockSecDto>>
+
+    @GET("/api/inventaire/stocks/mouvements/article/{articleId}")
+    suspend fun getStockMovements(@Path("articleId") articleId: String): Response<List<MouvementStockSecDto>>
     // modifie
     data class StockMovementRequest(val quantite: Int, val motif: String)
     data class StockAdjustmentRequest(val quantite: Int, val motif: String) // nouvelle quantité absolue

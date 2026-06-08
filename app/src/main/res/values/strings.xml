@@ -5,8 +5,18 @@
     <string name="welcome_back">Welcome Back</string>
     <string name="username_hint">Username</string>
     <string name="password_hint">Password</string>
-    <string name="login">Login</string>
-    <string name="forgot_password">Forgot Password?</string>
+    <string name="login">Se connecter</string>
+    <string name="forgot_password">Mot de passe oublié ?</string>
+    <string name="login_title">Connexion</string>
+    <string name="login_subtitle">Accédez à votre espace de travail</string>
+    <string name="label_username">Identifiant</string>
+    <string name="label_password">Mot de passe</string>
+    <string name="username_hint_v2">Votre identifiant</string>
+    <string name="password_hint_v2">••••••••</string>
+    <string name="or_divider">ou</string>
+    <string name="scan_badge_login">Scanner mon badge opérateur</string>
+    <string name="login_footer_v1">OSM Packaging v1.2 · ABIOOC</string>
+    <string name="login_footer_v2">Majel bel Abbes, Kasserine</string>
 
     <!-- === ÉCRAN DE RÉINITIALISATION === -->
     <string name="reset_password_title">Reset Password</string>
@@ -79,15 +89,15 @@
     <string name="welcome">Welcome!</string>
     <string name="quality_since_2026">Quality since 2022</string>
     <string name="fermer">Fermer</string>
-        <string name="article_detail_title">Détail Article</string>
-        <string name="label_general_info">Informations générales</string>
-        <string name="label_name">Nom</string>
-        <string name="label_category">Catégorie</string>
-        <string name="label_status">Statut</string>
-        <string name="label_stock">Stock</string>
-        <string name="label_quantity">Quantité</string>
-        <string name="label_location">Emplacement</string>
-        <string name="label_location_code">Code</string>
+    <string name="article_detail_title">Détail Article</string>
+    <string name="label_general_info">Informations générales</string>
+    <string name="label_name">Nom</string>
+    <string name="label_category">Catégorie</string>
+    <string name="label_status">Statut</string>
+    <string name="label_stock">Stock</string>
+    <string name="label_quantity">Quantité</string>
+    <string name="label_location">Emplacement</string>
+    <string name="label_location_code">Code</string>
     <string name="label_unit">Unité</string>
     <string name="label_supplier">Fournisseur</string>
     <string name="label_stock_min">Stock min</string>
@@ -97,4 +107,5 @@
     <string name="label_location_type">Type</string>
     <string name="label_location_available">Disponible</string>
     <string name="label_configuration">Configuration</string>
+
 </resources>

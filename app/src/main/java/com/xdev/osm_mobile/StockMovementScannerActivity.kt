@@ -41,11 +41,9 @@ class StockMovementScannerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityQrScannerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setupToolbar()
         setupBarcodeView()
     }
-
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -205,12 +203,6 @@ class StockMovementScannerActivity : AppCompatActivity() {
                 TypeMouvement.ENTREE -> "/api/inventaire/stocks/$articleId/entree"
                 TypeMouvement.SORTIE -> "/api/inventaire/stocks/$articleId/sortie"
             }
-            val syncRequest = SyncRequest(
-                operationId = operationId,
-                url = url,
-                method = "PUT",
-                body = bodyJson
-            )
             val operation = OfflineOperation(
                 operationId = operationId,
                 url = url,
@@ -222,7 +214,6 @@ class StockMovementScannerActivity : AppCompatActivity() {
             finish()
         }
     }
-
     private fun showAdjustmentDialog() {
         val view = createQuantityView("Nouvelle quantité")
         val etQuantite = view.getChildAt(0) as EditText

@@ -1,231 +1,591 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/olive_cream"
-    tools:context=".MainActivity">
+    android:background="@color/abiooc_bg">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <!-- HEADER: Vert Olive -->
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:elevation="0dp">
+        android:background="@color/abiooc_primary"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/olive_green"
-            app:title="OSM Mobile"
-            app:titleTextColor="@android:color/white" />
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-    </com.google.android.material.appbar.AppBarLayout>
+            <!-- ABIOOC Logo & Brand -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                <!-- Icon with subtle rounded background -->
+                <LinearLayout
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="@drawable/bg_logo_bubble"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="4dp">
+                    <!-- Rounded shape via background programmatically -->
+                    <ImageView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:src="@drawable/ic_abiooc_logo"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
+
+                <!-- Brand name + tagline -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ABIOOC"
+                        android:textColor="#FFFFFF"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.06" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Production · Qualité · Stock"
+                        android:textColor="#C8DDB8"
+                        android:textSize="10sp"
+                        android:letterSpacing="0.04" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Bonjour,"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Opérateur de ligne"
+            android:textColor="#E0E0E0"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerLayout"
+        android:layout_marginTop="-24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/tvWelcome"
-                style="@style/TextAppearance.OSM.Header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:text="Bonjour, User!" />
-
-            <GridLayout
+            android:paddingHorizontal="20dp">
+            <LinearLayout
+                android:id="@+id/cardMainScanner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:alignmentMode="alignMargins"
-                android:columnCount="2"
-                android:rowCount="2">
+                android:background="@drawable/bg_abiooc_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:clickable="true"
+                android:focusable="true">
 
-                <!-- Orders (OF) -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardOF"
-                    style="@style/Widget.OSM.Card"
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/bg_abiooc_card"
+                    android:padding="12dp"
+                    android:src="@android:drawable/ic_menu_camera"
+                    app:tint="@color/abiooc_primary" />
+
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Scanner un code"
+                        android:textColor="@color/abiooc_text_dark"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Article, Expédition, OF..."
+                        android:textColor="@color/abiooc_text_gray"
+                        android:textSize="12sp" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
                         <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@android:drawable/ic_menu_agenda"
-                            app:tint="@color/olive_green" />
-
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@android:drawable/presence_online"
+                            app:tint="@color/abiooc_accent_green" />
                         <TextView
-                            style="@style/TextAppearance.OSM.CardTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Orders (OF)" />
+                            android:layout_marginStart="4dp"
+                            android:text="Prêt à scanner"
+                            android:textColor="@color/abiooc_text_gray"
+                            android:textSize="12sp" />
                     </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
 
-                <!-- Mouvement de stock -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardStockMovement"
-                    style="@style/Widget.OSM.Card"
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_media_play"
+                    app:tint="@color/abiooc_text_gray" />
+            </LinearLayout>
+
+            <!-- MANUAL ENTRY CARD -->
+            <LinearLayout
+                android:id="@+id/cardManualEntry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_abiooc_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/bg_abiooc_card"
+                    android:padding="6dp"
+                    android:src="@android:drawable/ic_menu_search"
+                    app:tint="@color/abiooc_primary" />
+
+                <TextView
                     android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:text="Recherche par code"
+                    android:textColor="@color/abiooc_text_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@android:drawable/ic_media_play"
+                    app:tint="@color/abiooc_text_gray" />
+            </LinearLayout>
+
+
+            <!-- VUE D'ENSEMBLE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="Vue d'ensemble"
+                android:textColor="@color/abiooc_text_dark"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/cardOverviewOf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_abiooc_card"
                     android:clickable="true"
                     android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground">
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="16dp"
+                    android:elevation="1dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="OF en Cours"
+                        android:textColor="@color/abiooc_accent_green"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tvCountOf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="8dp"
+                        android:text="0"
+                        android:textColor="@color/abiooc_accent_green"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
+                    <ImageView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:src="@drawable/ic_production_order"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/ic_stock_movement"
-                            app:tint="@color/olive_green" />
-
-                        <TextView
-                            style="@style/TextAppearance.OSM.CardTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Mouvement de stock" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Historique QC -->
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardQCHistory"
-                    style="@style/Widget.OSM.Card"
+                <LinearLayout
+                    android:id="@+id/cardOverviewQc"
                     android:layout_width="0dp"
-                    android:layout_height="140dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="8dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_abiooc_card"
                     android:clickable="true"
                     android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground">
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="16dp"
+                    android:elevation="1dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="À contrôler"
+                        android:textColor="@color/abiooc_accent_orange"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tvCountQc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="8dp"
+                        android:text="0"
+                        android:textColor="@color/abiooc_accent_orange"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
+                    <ImageView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:src="@drawable/ic_quality_control"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/cardOverviewStock"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_abiooc_card"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="16dp"
+                    android:elevation="1dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Stock PF"
+                        android:textColor="@color/abiooc_accent_blue"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tvCountStock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="8dp"
+                        android:text="0"
+                        android:textColor="@color/abiooc_accent_blue"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
+                    <ImageView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:src="@drawable/ic_stock_boxes"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
 
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:src="@android:drawable/ic_menu_recent_history"
-                            app:tint="@color/olive_green" />
+                <LinearLayout
+                    android:id="@+id/cardOverviewExpeditions"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_abiooc_card"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingVertical="16dp"
+                    android:elevation="1dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Expéditions"
+                        android:textColor="@color/abiooc_accent_purple"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tvCountExpeditions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="8dp"
+                        android:text="0"
+                        android:textColor="@color/abiooc_accent_purple"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
+                    <ImageView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:src="@drawable/ic_expedition_truck"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
+            </LinearLayout>
 
-                        <TextView
-                            style="@style/TextAppearance.OSM.CardTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Historique QC" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+            <!-- FILE DE SYNCHRONISATION -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_sync_disabled" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:text="File de synchronisation"
+                    android:textColor="@color/abiooc_text_dark"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sync..."
+                    android:textColor="@color/abiooc_text_gray"
+                    android:textSize="12sp" />
+            </LinearLayout>
 
-            </GridLayout>
+            <LinearLayout
+                android:id="@+id/layoutSyncQueue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_abiooc_card"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:clickable="true"
+                android:focusable="true">
+                
+                <LinearLayout
+                    android:id="@+id/llDashboardSyncItems"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <!-- Dynamic sync items will be injected here -->
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvDashboardSyncEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Aucune synchronisation récente"
+                    android:textAlignment="center"
+                    android:textColor="@color/abiooc_text_gray"
+                    android:visibility="gone"
+                    android:paddingVertical="8dp"/>
+            </LinearLayout>
+
+            <!-- Actions rapides supprimées selon la demande -->
+
+            <!-- Hidden original FABs to prevent any missing ID issues if left over -->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton android:id="@+id/fabManualEntry" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton android:id="@+id/fabStartScan" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton android:id="@+id/fabScanHistory" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton android:id="@+id/btnLaunchScan" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone"/>
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
-    <!-- Nouveau FAB : saisie manuelle (icône de recherche) -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabManualEntry"
-        android:layout_width="wrap_content"
+    <!-- BOTTOM NAVIGATION (New 5 icons design) -->
+    <LinearLayout
+        android:id="@+id/bottomNavBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="216dp"
-        android:alpha="0.0"
-        android:contentDescription="Saisie manuelle"
-        android:scaleX="0.0"
-        android:scaleY="0.0"
-        android:visibility="gone"
-        app:backgroundTint="@color/olive_cream"
-        app:elevation="6dp"
-        app:maxImageSize="24dp"
-        app:srcCompat="@android:drawable/ic_menu_search"
-        app:tint="@color/olive_green" />
+        android:background="@android:color/white"
+        android:baselineAligned="false"
+        android:elevation="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <!-- FAB pour le scan (caché initialement) -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabStartScan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="88dp"
-        android:alpha="0.0"
-        android:contentDescription="Lancer le scan"
-        android:scaleX="0.0"
-        android:scaleY="0.0"
-        android:visibility="gone"
-        app:backgroundTint="@color/olive_green"
-        app:elevation="6dp"
-        app:maxImageSize="24dp"
-        app:srcCompat="@android:drawable/ic_menu_camera"
-        app:tint="@android:color/white" />
+        <LinearLayout
+            android:id="@+id/navHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_nav_home" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Tableau"
+                android:textColor="@color/abiooc_primary"
+                android:textSize="10sp" />
+        </LinearLayout>
 
-    <!-- FAB pour l'historique (caché initialement) -->
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fabScanHistory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="152dp"
-        android:alpha="0.0"
-        android:contentDescription="Historique des scans"
-        android:scaleX="0.0"
-        android:scaleY="0.0"
-        android:visibility="gone"
-        app:backgroundTint="@color/olive_cream"
-        app:elevation="6dp"
-        app:icon="@android:drawable/ic_menu_recent_history"
-        app:iconTint="@color/olive_green" />
+        <LinearLayout
+            android:id="@+id/navScan"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_nav_scan" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Scanner"
+                android:textColor="@color/abiooc_text_gray"
+                android:textSize="10sp" />
+        </LinearLayout>
 
-    <!-- FAB principal pour ouvrir le menu de scan -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnLaunchScan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="24dp"
-        android:contentDescription="Actions de scan"
-        app:backgroundTint="@color/olive_green"
-        app:borderWidth="0dp"
-        app:elevation="8dp"
-        app:maxImageSize="28dp"
-        app:rippleColor="#33FFFFFF"
-        app:srcCompat="@android:drawable/ic_input_add"
-        app:tint="@android:color/white" />
+        <LinearLayout
+            android:id="@+id/navQuality"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_nav_quality" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Historique Qualité"
+                android:textColor="@color/abiooc_text_gray"
+                android:textSize="10sp" />
+        </LinearLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <LinearLayout
+            android:id="@+id/navStock"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_nav_stock" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Historique mouvements Stock"
+                android:textColor="@color/abiooc_text_gray"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navProfile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_nav_profile" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Profil"
+                android:textColor="@color/abiooc_text_gray"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

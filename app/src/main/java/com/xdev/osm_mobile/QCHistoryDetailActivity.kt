@@ -16,8 +16,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class QCHistoryDetailActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityQchistoryDetailBinding
     private lateinit var adapter: QCHistoryAdapter
+    private var fullHistory: List<QCResultDTO> = emptyList()
+    private var currentOfId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +28,7 @@ class QCHistoryDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupToolbar()
+        setupSwipeRefresh()
 
         val ofId = intent.getStringExtra(EXTRA_OF_ID)
         val ofLabel = intent.getStringExtra(EXTRA_OF_LABEL) ?: "OF"
@@ -34,16 +38,66 @@ class QCHistoryDetailActivity : AppCompatActivity() {
             finish()
             return
         }
+        currentOfId = ofId
+        binding.tvOfDescHeader.text = ofLabel
 
-        supportActionBar?.title = "Historique QC - $ofLabel"
+        binding.btnNewControl.setOnClickListener {
+            startActivity(QCActivity.newIntent(this, ofId, ofLabel))
+        }
+
+        setupFilterChips()
+        setupDateHeader()
         loadHistory(ofId)
     }
 
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         binding.toolbar.setNavigationOnClickListener { finish() }
     }
+
+    private fun setupSwipeRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            loadHistory(currentOfId)
+        }
+        // Couleurs du loader (optionnel)
+        binding.swipeRefreshLayout.setColorSchemeColors(
+            getColor(android.R.color.holo_blue_dark),
+            getColor(android.R.color.holo_green_dark),
+            getColor(android.R.color.holo_orange_dark)
+        )
+    }
+
+    private fun setupDateHeader() {
+        val sdf = java.text.SimpleDateFormat("dd MMMM", java.util.Locale.FRANCE)
+        val today = sdf.format(java.util.Date()).uppercase()
+        binding.tvDateSection.text = "AUJOURD'HUI - $today"
+    }
+
+    private fun setupFilterChips() {
+        val chips = listOf(binding.chipTous, binding.chipConformes, binding.chipNok)
+        val onChipClick = android.view.View.OnClickListener { view ->
+            for (chip in chips) {
+                chip.setBackgroundResource(R.drawable.bg_chip_unselected_outline)
+                chip.setTextColor(android.graphics.Color.parseColor("#4A4A4A"))
+            }
+            val selected = view as android.widget.TextView
+            selected.setBackgroundResource(R.drawable.bg_chip_selected_outline)
+            selected.setTextColor(android.graphics.Color.parseColor("#1976D2"))
+
+            val filtered = when (selected.id) {
+                R.id.chipConformes -> fullHistory.filter { it.statut == "OK" || it.statut?.equals("CONFORME", true) == true }
+                R.id.chipNok -> fullHistory.filter { it.statut?.startsWith("NOK", true) == true }
+                else -> fullHistory
+            }
+            updateRecyclerView(filtered)
+        }
+        for (chip in chips) {
+            chip.setOnClickListener(onChipClick)
+        }
+    }
+
     private fun loadHistory(ofId: String) {
         lifecycleScope.launch {
             try {
@@ -57,23 +111,38 @@ class QCHistoryDetailActivity : AppCompatActivity() {
                         Toast.makeText(this@QCHistoryDetailActivity, "Aucun contrôle QC enregistré", Toast.LENGTH_LONG).show()
                         finish()
                     } else {
-                        setupRecyclerView(history)
+                        fullHistory = history
+                        updateStats(history)
+                        updateRecyclerView(history)
                     }
                 } else {
                     Toast.makeText(this@QCHistoryDetailActivity, "Erreur chargement historique", Toast.LENGTH_LONG).show()
-                    finish()
                 }
             } catch (e: Exception) {
                 Toast.makeText(this@QCHistoryDetailActivity, "Erreur : ${e.message}", Toast.LENGTH_LONG).show()
-                finish()
+            } finally {
+                binding.swipeRefreshLayout.isRefreshing = false
             }
         }
     }
-    private fun setupRecyclerView(history: List<QCResultDTO>) {
+
+    private fun updateStats(history: List<QCResultDTO>) {
+        val total = history.size
+        val nokList = history.filter { it.statut?.startsWith("NOK", ignoreCase = true) == true }
+        val bloquant = nokList.count {
+            it.statut?.contains("BLOQUANT", ignoreCase = true) == true || it.statut == "NOK"
+        }
+        binding.tvTotalControls.text = total.toString()
+        binding.tvNokBloquant.text = bloquant.toString()
+        binding.tvControlsCount.text = "$total contrôle${if (total > 1) "s" else ""}"
+    }
+
+    private fun updateRecyclerView(history: List<QCResultDTO>) {
         adapter = QCHistoryAdapter(history)
         binding.rvQCHistory.layoutManager = LinearLayoutManager(this)
         binding.rvQCHistory.adapter = adapter
     }
+
     companion object {
         private const val EXTRA_OF_ID = "extra_of_id"
         private const val EXTRA_OF_LABEL = "extra_of_label"

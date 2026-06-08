@@ -23,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        window.statusBarColor = androidx.core.content.ContextCompat.getColor(this, R.color.abiooc_login_green)
 
         if (OSMApplication.sessionManager.isLoggedIn()) {
             navigateToMain()

@@ -51,19 +51,16 @@ class ControlPointAdapter(
             else -> "Texte libre"
         }
 
-        // Valeur
         holder.etValue.setText(values[position] ?: "")
         holder.etValue.setOnFocusChangeListener { _, _ ->
             values[position] = holder.etValue.text.toString()
         }
 
-        // Commentaire
         holder.etComment.setText(comments[position] ?: "")
         holder.etComment.setOnFocusChangeListener { _, _ ->
             comments[position] = holder.etComment.text.toString()
         }
 
-        // Photo
         val currentPhoto = photos[position]
         if (currentPhoto != null) {
             try {

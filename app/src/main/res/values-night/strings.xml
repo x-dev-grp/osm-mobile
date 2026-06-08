@@ -9,4 +9,11 @@
     <string name="olive_branch">Olive branch</string>
     <string name="welcome">Welcome!</string>
     <string name="fermer">Fermer</string>
+    <string name="offline_mode_cache">Mode hors ligne - données en cache</string>
+    <string name="ordre_fabrication_title">Ordres de fabrication</string>
+    <string name="no_internet_connection">Pas de connexion internet</string>
+    <string name="sync_success">Synchronisation réussie</string>
+    <string name="sync_error">Erreur de synchronisation</string>
+    <string name="no_of_found">Aucun ordre de fabrication trouvé</string>
+    <string name="invalid_of_id">ID OF invalide</string>
 </resources>

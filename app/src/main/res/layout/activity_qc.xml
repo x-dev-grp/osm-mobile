@@ -5,66 +5,92 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/abiooc_bg"
     android:orientation="vertical"
     tools:context=".QCActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        app:titleTextColor="@android:color/white" />
+        android:layout_height="wrap_content"
+        android:background="@color/abiooc_primary"
+        app:elevation="4dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/abiooc_primary"
+            app:titleTextColor="@android:color/white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="16dp">
+        android:paddingHorizontal="20dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="40dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- OF Info Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_abiooc_card"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:elevation="1dp">
+
+                <TextView
+                    android:id="@+id/tvOfInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/abiooc_text_dark"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Titre Section -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Contrôle qualité"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp" />
-
-            <TextView
-                android:id="@+id/tvOfInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="24dp"
-                android:textColor="@android:color/darker_gray" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Points de contrôle"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvControlPoints"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Signature"
-                android:textSize="16sp"
+                android:text="POINTS DE CONTRÔLE"
+                android:textColor="@color/abiooc_text_gray"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 android:layout_marginTop="24dp"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="12dp" />
+
+            <!-- Points de Contrôle List (RecyclerView inside Card) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_abiooc_card"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:elevation="1dp">
+                
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvControlPoints"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+            </LinearLayout>
+
+            <!-- Signature Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SIGNATURE"
+                android:textColor="@color/abiooc_text_gray"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="12dp" />
 
             <EditText
                 android:id="@+id/etSignature"
@@ -73,26 +99,34 @@
                 android:hint="Tapez votre signature (nom, prénom...)"
                 android:inputType="textCapWords"
                 android:maxLines="1"
-                android:padding="12dp"
-                android:background="@android:drawable/editbox_background" />
+                android:padding="16dp"
+                android:background="@drawable/bg_abiooc_card"
+                android:textColor="@color/abiooc_text_dark"
+                android:textSize="14sp"
+                android:elevation="1dp"/>
 
             <TextView
                 android:id="@+id/tvSignatureInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:paddingTop="4dp"
-                android:textColor="@android:color/darker_gray"
+                android:paddingTop="8dp"
+                android:textColor="@color/abiooc_error"
                 android:visibility="gone" />
 
+            <!-- Submit Button -->
             <Button
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Enregistrer le contrôle"
-                android:backgroundTint="?attr/colorPrimary"
-                android:textColor="@android:color/white" />
+                android:backgroundTint="@color/abiooc_primary"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                app:cornerRadius="12dp" />
+
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

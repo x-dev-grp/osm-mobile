@@ -2,6 +2,8 @@ package com.xdev.osm_mobile.models
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import java.util.Date
+import java.util.UUID
 
 data class LotDto(
     @SerializedName("id") val id: String?,
@@ -52,12 +54,14 @@ data class OrderFabricationDTO(
     @SerializedName("skuCode") val skuCode: String?,
     @SerializedName("ligneId") val ligneId: String?,
     @SerializedName("ligneNom") val ligneNom: String?,
+    @SerializedName("lotVracNom") val lotVracNom : String?,
     @SerializedName("lotVracId") val lotVracId: String?,
     @SerializedName("bomId") val bomId: String?,
     @SerializedName("sku") val sku: SKUDto?,
-    @SerializedName("lignes") val lignes: List<LigneOFDto>?,
+    @SerializedName("lignes") var lignes: List<LigneOFDto>?,
     @SerializedName("motifNC") val motifNC: String? = null,
-    @SerializedName("qrHex") val qrHex: String? = null
+    @SerializedName("qrHex") val qrHex: String? = null,
+    @SerializedName("qualityStatus") val qualityStatus: String? = null
 ) : Serializable
 data class SKUDto(
     @SerializedName("id") val id: String?,
@@ -87,7 +91,8 @@ data class QCControlPointDTO(
 data class SaisieProductionRequest(
     @SerializedName("quantiteBonne") val quantiteBonne: Double,
     @SerializedName("quantiteNC") val quantiteNC: Double,
-    @SerializedName("motifNC") val motifNC: String? = null
+    @SerializedName("motifNC") val motifNC: String? = null,
+    @SerializedName("lignes") val lignes: List<LigneOFDto>? = null
 ) : Serializable
 data class BomDto(
     @SerializedName("id") val id: String?,
@@ -102,7 +107,7 @@ data class BomLineDto(
     @SerializedName("articleNom") val articleNom: String?,
     @SerializedName("quantity") val quantity: Double?,
     @SerializedName("unitOfMeasure") val unitOfMeasure: String?
-)
+) : Serializable
 data class ArticleSecDto(
     @SerializedName("id") val id: String?,
     @SerializedName("nom") val nom: String?,
@@ -156,7 +161,11 @@ data class QCResultDTO(
     @SerializedName("commentaire") val commentaire: String?,
     @SerializedName("photo") val photo: String?,
     @SerializedName("signature") val signature: String?,
-    @SerializedName("dateControle") val dateControle: String?
+    @SerializedName("dateControle") val dateControle: String?,
+    @SerializedName("type") val type: String? = null,
+    @SerializedName("minValue") val minValue: Double? = null,
+    @SerializedName("maxValue") val maxValue: Double? = null,
+    @SerializedName("controlPointNom") val controlPointNom: String? = null
 )
 data class SyncRequest(
     @SerializedName("operationId") val operationId: String,
@@ -175,6 +184,50 @@ data class OilTransactionDto(
     @SerializedName("oilType") val oilType: String?,
     @SerializedName("createdAt") val createdAt: String?
 ): Serializable
+data class MouvementStockSecDto(
+    @SerializedName("id") val id: String?,
+    @SerializedName("article") val article: ArticleSecDto?,
+    @SerializedName("quantite") val quantite: Int?,
+    @SerializedName("typeMouvement") val typeMouvement: String?,
+    @SerializedName("motif") val motif: String?,
+    @SerializedName("dateMouvement") val dateMouvement: String?
+) : Serializable
+data class ExpeditionLineDto(
+    @SerializedName("id") val id: String?,
+    @SerializedName("ofId") val ofId: String?,
+    @SerializedName("ofCode") val ofCode: String?,
+    @SerializedName("articleId") val articleId: String?,
+    @SerializedName("articleName") val articleName: String?,
+    @SerializedName("quantity") val quantity: Int?,
+    @SerializedName("volume") val volume: Double?,
+    @SerializedName("lotNumber") val lotNumber: String?,
+    @SerializedName("unit") val unit: String?
+) : Serializable
+
+data class ExpeditionDto(
+    @SerializedName("id") val id: String?,
+    @SerializedName("expeditionNumber") val expeditionNumber: String?,
+    @SerializedName("projetId") val projetId: String?,
+    @SerializedName("projetCode") val projetCode: String?,
+    @SerializedName("status") val status: String?,
+    @SerializedName("destination") val destination: String?,
+    @SerializedName("plannedShipDate") val plannedShipDate: String?,
+    @SerializedName("validatedAt") val validatedAt: String?,
+    @SerializedName("shippedAt") val shippedAt: String?,
+    @SerializedName("carrierName") val carrierName: String?,
+    @SerializedName("driverName") val driverName: String?,
+    @SerializedName("truckNumber") val truckNumber: String?,
+    @SerializedName("totalQuantity") val totalQuantity: Int?,
+    @SerializedName("totalVolume") val totalVolume: Double?,
+    @SerializedName("publicCode") val publicCode: String?,
+    @SerializedName("notes") val notes: String?,
+    @SerializedName("lines") val lines: List<ExpeditionLineDto>?
+) : Serializable
+
+data class ExpeditionActionRequest(
+    @SerializedName("comment") val comment: String? = null,
+    @SerializedName("location") val location: String? = null
+)
 data class RegistrationRequest(
     @SerializedName("userId")
     val userId: String,

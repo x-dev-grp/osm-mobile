@@ -9,7 +9,9 @@ import com.onesignal.notifications.INotificationClickEvent
 import com.onesignal.notifications.INotificationClickListener
 import com.onesignal.user.subscriptions.IPushSubscriptionObserver
 import com.onesignal.user.subscriptions.PushSubscriptionChangedState
+import com.xdev.osm_mobile.horsligne.NetworkMonitor
 import com.xdev.osm_mobile.horsligne.SessionManager
+import com.xdev.osm_mobile.horsligne.SyncManager
 import com.xdev.osm_mobile.models.RegistrationRequest
 import com.xdev.osm_mobile.network.RetrofitClient
 import com.xdev.osm_mobile.database.AppDatabase
@@ -29,12 +31,11 @@ class OSMApplication : Application() {
             private set
         lateinit var repository: AppRepository
             private set
+        lateinit var syncManager: SyncManager
         lateinit var instance: OSMApplication
             private set
 
         const val ONESIGNAL_APP_ID = "e548b208-cac7-4a46-833b-e2ad16add4ac"
-
-
     }
 
     private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -45,6 +46,14 @@ class OSMApplication : Application() {
         sessionManager = SessionManager.getInstance(this)
         database = AppDatabase.getDatabase(this)
         repository = AppRepository(RetrofitClient.instance, database.mainDao())
+        val networkMonitor = NetworkMonitor(this)
+        syncManager = SyncManager(repository, networkMonitor)
+        syncManager.startAutoSync()
+        appScope.launch {
+            delay(2000)
+            syncManager.syncNow()
+        }
+
 
         OneSignal.Debug.logLevel = LogLevel.VERBOSE
         OneSignal.initWithContext(this, ONESIGNAL_APP_ID)
