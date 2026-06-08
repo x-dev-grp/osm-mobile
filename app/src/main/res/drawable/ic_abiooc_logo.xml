@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    ABIOOC Logo Icon - Stylized "A" with olive branch
+    Square format (48x48) for use on green header background
+    Colors: white letter A + gold olives + light green leaves
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+
+    <!--
+    ══════════════════════════════════════
+    THE LETTER "A" — white, stylized serif
+    Left stroke:  from (10,42) up to peak (24,6)
+    Right stroke: from (24,6) down to (38,42)
+    Crossbar at y=28
+    ══════════════════════════════════════
+    -->
+
+    <!-- Left leg of A -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="
+          M10,42
+          L17,42
+          L24,14
+          L21,8
+          Z" />
+
+    <!-- Right leg of A -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="
+          M38,42
+          L31,42
+          L24,14
+          L27,8
+          Z" />
+
+    <!-- Peak triangle (joins left and right at the top) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="
+          M21,8
+          L24,6
+          L27,8
+          L24,14
+          Z" />
+
+    <!-- Crossbar -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="
+          M16,30
+          L32,30
+          L33,34
+          L15,34
+          Z" />
+
+    <!--
+    ══════════════════════════════════════
+    OLIVE BRANCH — on the left leg of A
+    Stem goes diagonally from the A baseline
+    up to the peak area on the left side
+    ══════════════════════════════════════
+    -->
+
+    <!-- Main branch stem (thin curved line) -->
+    <path
+        android:strokeColor="#F5D66A"
+        android:strokeWidth="1.6"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M14,38 Q10,30 12,20 Q13,14 18,9" />
+
+    <!-- Small twig 1 (bottom) -->
+    <path
+        android:strokeColor="#F5D66A"
+        android:strokeWidth="1.2"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M12.5,34 Q8,31 8,27" />
+
+    <!-- Small twig 2 (middle) -->
+    <path
+        android:strokeColor="#F5D66A"
+        android:strokeWidth="1.2"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M12,25 Q8,23 9,18" />
+
+    <!-- Small twig 3 (top) -->
+    <path
+        android:strokeColor="#F5D66A"
+        android:strokeWidth="1.2"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M14,17 Q11,13 13,9" />
+
+    <!-- Leaf 1 (lower left, pointing left-down) -->
+    <path
+        android:fillColor="#A8CC80"
+        android:pathData="M12.5,34 Q6,32 8,27 Q12,30 12.5,34 Z" />
+
+    <!-- Leaf 2 (middle left) -->
+    <path
+        android:fillColor="#A8CC80"
+        android:pathData="M12,25 Q5,22 9,18 Q13,21 12,25 Z" />
+
+    <!-- Leaf 3 (upper, near peak) -->
+    <path
+        android:fillColor="#A8CC80"
+        android:pathData="M14,17 Q9,12 13,9 Q17,13 14,17 Z" />
+
+    <!-- Olive berry 1 — gold, bottom twig tip -->
+    <path
+        android:fillColor="#F5D66A"
+        android:pathData="M8,27 A2.2,2.8 0 1,1 8.1,27 Z" />
+
+    <!-- Olive berry 2 — gold, middle twig tip -->
+    <path
+        android:fillColor="#F5D66A"
+        android:pathData="M9,18 A2.2,2.8 0 1,1 9.1,18 Z" />
+
+    <!-- Olive berry 3 — light green, top twig tip -->
+    <path
+        android:fillColor="#C5E0A0"
+        android:pathData="M13,9 A2.2,2.8 0 1,1 13.1,9 Z" />
+
+    <!-- Tiny highlight dot on each berry for realism -->
+    <path android:fillColor="#FFFFF0"
+        android:pathData="M7.5,26.2 A0.5,0.5 0 1,1 7.6,26.2 Z" />
+    <path android:fillColor="#FFFFF0"
+        android:pathData="M8.5,17.2 A0.5,0.5 0 1,1 8.6,17.2 Z" />
+
+</vector>

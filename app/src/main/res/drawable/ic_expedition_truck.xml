@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Expedition / Shipping icon - delivery truck -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+
+    <!-- Truck body (cargo) -->
+    <path
+        android:fillColor="#6B4DB0"
+        android:pathData="M4,18 L4,36 L32,36 L32,18 Z" />
+    <!-- Truck body top stripe -->
+    <path
+        android:fillColor="#8060C8"
+        android:pathData="M4,18 L32,18 L32,22 L4,22 Z" />
+    <!-- Truck cab -->
+    <path
+        android:fillColor="#4A3890"
+        android:pathData="M32,24 L32,36 L44,36 L44,24 Q44,20 40,20 L34,20 Q32,20 32,24 Z" />
+    <!-- Windshield -->
+    <path
+        android:fillColor="#A8D8F0"
+        android:pathData="M34,21 L42,21 L42,27 L34,27 Z" />
+    <!-- Cab side window -->
+    <path
+        android:fillColor="#A8D8F0"
+        android:pathData="M33,29 L36,29 L36,33 L33,33 Z" />
+    <!-- Cargo door lines -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#5040A0"
+        android:strokeWidth="1"
+        android:pathData="M18,18 L18,36" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="0.5"
+        android:pathData="M10,26 L10,32 M16,26 L16,32 M22,26 L22,32 M28,26 L28,32" />
+    <!-- Rear wheels -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M8,36 A6,6 0 1,1 8.01,36 Z" />
+    <path
+        android:fillColor="#666666"
+        android:pathData="M8,36 A3,3 0 1,1 8.01,36 Z" />
+    <path
+        android:fillColor="#333333"
+        android:pathData="M22,36 A6,6 0 1,1 22.01,36 Z" />
+    <path
+        android:fillColor="#666666"
+        android:pathData="M22,36 A3,3 0 1,1 22.01,36 Z" />
+    <!-- Front wheel -->
+    <path
+        android:fillColor="#333333"
+        android:pathData="M38,36 A5,5 0 1,1 38.01,36 Z" />
+    <path
+        android:fillColor="#666666"
+        android:pathData="M38,36 A2.5,2.5 0 1,1 38.01,36 Z" />
+    <!-- Speed lines -->
+    <path
+        android:strokeColor="#8060C8"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M2,22 L6,22 M1,26 L5,26 M2,30 L6,30" />
+    <!-- Location pin on truck -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M13,20 Q13,16 17,16 Q21,16 21,20 Q21,24 17,26 Q13,24 13,20 Z" />
+    <path
+        android:fillColor="#6B4DB0"
+        android:pathData="M17,19 A2,2 0 1,1 17.01,19 Z" />
+</vector>

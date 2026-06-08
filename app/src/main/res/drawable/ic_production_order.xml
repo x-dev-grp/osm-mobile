@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Production Order icon - factory/production line worker -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+
+    <!-- Machine/press body -->
+    <path
+        android:fillColor="#4A6741"
+        android:pathData="M8,32 L8,40 L40,40 L40,32 Z" />
+    <!-- Machine top -->
+    <path
+        android:fillColor="#5A8050"
+        android:pathData="M12,24 L12,32 L36,32 L36,24 Z" />
+    <!-- Machine arm -->
+    <path
+        android:fillColor="#3A5030"
+        android:pathData="M20,16 L20,24 L28,24 L28,16 Z" />
+    <!-- Gear symbol -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M24,19 A3,3 0 1,1 24.01,19 Z" />
+    <path
+        android:fillColor="#4A6741"
+        android:pathData="M24,20.5 A1.5,1.5 0 1,1 24.01,20.5 Z" />
+    <!-- Gear teeth -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M23,16 L25,16 L25,17 L23,17 Z M23,21 L25,21 L25,22 L23,22 Z M21.5,17.5 L22.5,16.5 L23,17 L22,18 Z M25,17.5 L26,16.5 L26.5,17 L25.5,18 Z M21,19 L21,21 L22,21 L22,19 Z M26,19 L26,21 L27,21 L27,19 Z" />
+    <!-- Conveyor belt -->
+    <path
+        android:fillColor="#2D3A2D"
+        android:pathData="M6,40 L42,40 L42,44 L6,44 Z" />
+    <!-- Belt details -->
+    <path
+        android:fillColor="#4A6741"
+        android:pathData="M10,40 L10,44 M16,40 L16,44 M22,40 L22,44 M28,40 L28,44 M34,40 L34,44 M40,40 L40,44"
+        android:strokeColor="#3A5030"
+        android:strokeWidth="1" />
+    <!-- Product box on belt -->
+    <path
+        android:fillColor="#8B7355"
+        android:pathData="M32,34 L40,34 L40,40 L32,40 Z" />
+    <path
+        android:fillColor="#6B5030"
+        android:pathData="M33,35 L39,35 L39,36 L33,36 Z M33,37 L39,37 L39,38 L33,38 Z" />
+    <!-- Worker helmet -->
+    <path
+        android:fillColor="#E8A020"
+        android:pathData="M14,22 Q14,18 18,18 Q22,18 22,22 L22,23 L14,23 Z" />
+    <!-- Worker body -->
+    <path
+        android:fillColor="#E07020"
+        android:pathData="M13,23 L13,32 L22,32 L22,23 Z" />
+    <!-- Worker head -->
+    <path
+        android:fillColor="#F5CBA7"
+        android:pathData="M15,14 Q15,11 18,11 Q21,11 21,14 Q21,18 18,18 Q15,18 15,14 Z" />
+</vector>

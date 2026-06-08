@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stock / Box icon -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Box body -->
+    <path android:fillColor="#D4A020"
+        android:pathData="M3,10 L12,6 L21,10 L21,20 L12,24 L3,20 Z" />
+    <!-- Box top -->
+    <path android:fillColor="#F5CC40"
+        android:pathData="M3,10 L12,6 L21,10 L12,14 Z" />
+    <!-- Box right side -->
+    <path android:fillColor="#B88A18"
+        android:pathData="M21,10 L21,20 L12,24 L12,14 Z" />
+    <!-- Tape on top -->
+    <path android:fillColor="#E0505A"
+        android:pathData="M9,8 L12,6.5 L15,8 L12,9.5 Z" />
+    <!-- Fragile symbol on side -->
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="1" android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M6,14 L6,18 M6,13 L6,13.5" />
+</vector>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- QR Code Scanner icon -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Corner brackets -->
+    <path android:strokeColor="#4A6741" android:strokeWidth="2" android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M3,7 L3,3 L7,3" />
+    <path android:strokeColor="#4A6741" android:strokeWidth="2" android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M17,3 L21,3 L21,7" />
+    <path android:strokeColor="#4A6741" android:strokeWidth="2" android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M3,17 L3,21 L7,21" />
+    <path android:strokeColor="#4A6741" android:strokeWidth="2" android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M17,21 L21,21 L21,17" />
+    <!-- QR code squares -->
+    <path android:fillColor="#333333"
+        android:pathData="M5,5 L9,5 L9,9 L5,9 Z" />
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M6,6 L8,6 L8,8 L6,8 Z" />
+    <path android:fillColor="#333333"
+        android:pathData="M15,5 L19,5 L19,9 L15,9 Z" />
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M16,6 L18,6 L18,8 L16,8 Z" />
+    <path android:fillColor="#333333"
+        android:pathData="M5,15 L9,15 L9,19 L5,19 Z" />
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M6,16 L8,16 L8,18 L6,18 Z" />
+    <!-- QR data dots -->
+    <path android:fillColor="#333333"
+        android:pathData="M11,5 L12,5 L12,6 L11,6 Z M13,5 L14,5 L14,6 L13,6 Z
+                          M11,7 L12,7 L12,8 L11,8 Z M13,9 L14,9 L14,10 L13,10 Z
+                          M11,11 L12,11 L12,12 L11,12 Z M13,11 L14,11 L14,12 L13,12 Z
+                          M15,11 L16,11 L16,12 L15,12 Z M17,11 L18,11 L18,12 L17,12 Z
+                          M15,13 L16,13 L16,14 L15,14 Z M17,13 L18,13 L18,14 L17,14 Z
+                          M19,13 L20,13 L20,14 L19,14 Z M11,13 L12,13 L12,14 L11,14 Z
+                          M13,13 L14,13 L14,14 L13,14 Z M11,15 L12,15 L12,16 L11,16 Z
+                          M13,15 L14,15 L14,16 L13,16 Z M15,15 L16,15 L16,16 L15,16 Z
+                          M19,15 L20,15 L20,16 L19,16 Z M17,17 L18,17 L18,18 L17,18 Z
+                          M19,17 L20,17 L20,18 L19,18 Z M15,17 L16,17 L16,18 L15,18 Z" />
+    <!-- Red scan line -->
+    <path android:strokeColor="#E03030" android:strokeWidth="1.5" android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M4,12 L20,12" />
+</vector>

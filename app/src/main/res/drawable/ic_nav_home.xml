@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dashboard home icon -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- House shape -->
+    <path android:fillColor="#4A6741"
+        android:pathData="M3,12 L12,4 L21,12 L21,21 L15,21 L15,15 L9,15 L9,21 L3,21 Z" />
+    <!-- Door -->
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M10.5,17 L10.5,21 L13.5,21 L13.5,17 Z" />
+    <!-- Window left -->
+    <path android:fillColor="#A8D8F0"
+        android:pathData="M5,14 L8,14 L8,18 L5,18 Z" />
+    <!-- Window right -->
+    <path android:fillColor="#A8D8F0"
+        android:pathData="M16,14 L19,14 L19,18 L16,18 Z" />
+    <!-- Roof peak detail -->
+    <path android:fillColor="#3A5030"
+        android:pathData="M12,4 L21,12 L20,12 L12,5 L4,12 L3,12 Z" />
+    <!-- Grid on windows -->
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="0.5" android:fillColor="#00000000"
+        android:pathData="M6.5,14 L6.5,18 M5,16 L8,16 M17.5,14 L17.5,18 M16,16 L19,16" />
+</vector>

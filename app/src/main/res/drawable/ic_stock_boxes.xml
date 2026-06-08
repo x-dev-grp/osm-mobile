@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stock / Boxes icon - isometric boxes with clipboard -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+
+    <!-- Back box body -->
+    <path
+        android:fillColor="#D4A020"
+        android:pathData="M10,16 L22,10 L34,16 L34,28 L22,34 L10,28 Z" />
+    <!-- Back box top face -->
+    <path
+        android:fillColor="#E8B830"
+        android:pathData="M10,16 L22,10 L34,16 L22,22 Z" />
+    <!-- Back box right face -->
+    <path
+        android:fillColor="#B88A18"
+        android:pathData="M34,16 L34,28 L22,34 L22,22 Z" />
+    <!-- Back box tape stripe -->
+    <path
+        android:fillColor="#E0505A"
+        android:strokeColor="#C03040"
+        android:strokeWidth="0.5"
+        android:pathData="M17,13 L22,10.5 L27,13 L22,15.5 Z" />
+
+    <!-- Front box body -->
+    <path
+        android:fillColor="#E8B830"
+        android:pathData="M16,26 L28,20 L40,26 L40,38 L28,44 L16,38 Z" />
+    <!-- Front box top face -->
+    <path
+        android:fillColor="#F5CC40"
+        android:pathData="M16,26 L28,20 L40,26 L28,32 Z" />
+    <!-- Front box right face -->
+    <path
+        android:fillColor="#C89820"
+        android:pathData="M40,26 L40,38 L28,44 L28,32 Z" />
+    <!-- Front box tape stripe -->
+    <path
+        android:fillColor="#E0505A"
+        android:pathData="M23,23 L28,20.5 L33,23 L28,25.5 Z" />
+
+    <!-- Clipboard -->
+    <path
+        android:fillColor="#E04050"
+        android:pathData="M30,14 L30,38 L44,38 L44,14 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M31.5,17 L42.5,17 L42.5,37 L31.5,37 Z" />
+    <!-- Clipboard clip top -->
+    <path
+        android:fillColor="#C02030"
+        android:pathData="M35,14 Q35,11 37,11 Q39,11 39,14 L39,16 L35,16 Z" />
+    <!-- Clipboard check items -->
+    <path
+        android:fillColor="#4A6741"
+        android:pathData="M33,20 L34.5,21.5 L37,19 L37.5,19.5 L34.5,22.5 L32.5,20.5 Z" />
+    <path
+        android:fillColor="#E0A000"
+        android:pathData="M33,24 L34.5,25.5 L37,23 L37.5,23.5 L34.5,26.5 L32.5,24.5 Z" />
+    <path
+        android:fillColor="#E07020"
+        android:pathData="M33,28 L34.5,29.5 L37,27 L37.5,27.5 L34.5,30.5 L32.5,28.5 Z" />
+    <path
+        android:fillColor="#4A90D9"
+        android:pathData="M33,32 L34.5,33.5 L37,31 L37.5,31.5 L34.5,34.5 L32.5,32.5 Z" />
+    <!-- Lines next to checks -->
+    <path
+        android:fillColor="#CCCCCC"
+        android:pathData="M38,20 L42,20 L42,21 L38,21 Z M38,24 L42,24 L42,25 L38,25 Z M38,28 L42,28 L42,29 L38,29 Z M38,32 L42,32 L42,33 L38,33 Z" />
+</vector>
